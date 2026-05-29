@@ -1,3 +1,4 @@
+/*
 import java.util.NoSuchElementException;
 
 public class Fila<E> {
@@ -224,7 +225,7 @@ public class Fila<E> {
             aux2=aux2.getProximo();
         }
         return filaIntercalada;
-        */
+
 
         while (aux != null || aux2 != null) {  //aqui nesse while mesmo se parar uma fila ele imfileira o resto
             if (aux != null) {
@@ -314,3 +315,5 @@ public class Fila<E> {
     }
 
 }
+*/
+//deixei comentado para quando rodar o Main n dar erro

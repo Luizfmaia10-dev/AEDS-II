@@ -1,3 +1,4 @@
+/*
 import java.util.NoSuchElementException;
 
 public class Lista<E> {
@@ -257,8 +258,6 @@ public class Lista<E> {
             atual = atual.getProximo().getProximo();
         }
     }
-
-
-
-
 }
+*/
+//deixei comentado para quando rodar o Main n dar erro
