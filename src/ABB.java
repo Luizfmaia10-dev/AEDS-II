@@ -268,4 +268,29 @@ public class ABB<E extends Comparable<E>> {
             return quantidadeDeNosFolha(raizArvore.getEsquerda())+quantidadeDeNosFolha(raizArvore.getDireita());
         }
     }
+
+    public int SomarItens(No<E> raizArvore){
+        int soma = 0;
+        // 1. Caso base: se o nó atual for nulo, a soma dele é 0
+        if (raizArvore == null) {
+            return 0;
+        }
+        soma += SomarItens(raizArvore.getEsquerda()); // Soma o lado esquerdo
+        soma += (int) raizArvore.getItem();          // Soma o nó atual
+        soma += SomarItens(raizArvore.getDireita());  // Soma o lado direito
+
+        return soma;
+    }
+    public int ProdutoItens(No <E> raizArvore){
+        int produto = 0;
+        if (raizArvore == null) {
+            return 0;
+        }
+        produto *= ProdutoItens(raizArvore.getEsquerda());
+        produto *= (int) raizArvore.getItem();
+        produto *=  ProdutoItens(raizArvore.getDireita());
+
+        return produto;
+
+    }
 }
