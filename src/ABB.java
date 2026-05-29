@@ -32,6 +32,11 @@ public class ABB<E extends Comparable<E>> {
 
         comparacao = procurado.compareTo(raizArvore.getItem());
 
+        //Funcao compareTo:
+        //retorna < 0  → item é MENOR  que o nó RAIZ atual  → vai para esquerda
+        //retorna = 0  → item é IGUAL  ao nó RAIZ atual     → O Item foi encontrado!
+        //retorna > 0  → item é MAIOR  que o nó RAIZ atual  → vai para direita
+
         if (comparacao == 0)
         // O item procurado foi encontrado.
             return raizArvore.getItem();
@@ -239,5 +244,28 @@ public class ABB<E extends Comparable<E>> {
         // e, como segundo parâmetro, o item que deverá ser localizado e retirado dessa árvore.
         // Por fim, a raiz atual da árvore é atualizada, com a raiz retornada pelo método "remover" recursivo.
         this.raiz = remover(this.raiz, itemRemover);
+    }
+
+    public int quantidadeDeNos(No<E> raizArvore) {
+        if(vazia())
+            return 0;
+        else 
+            return  1+quantidadeDeNos(raiz.getEsquerda())+quantidadeDeNos(raiz.getDireita());
+    }
+    public int quantidadeDeNosFolha(No<E> raizArvore) {
+        //A recursão vai e volta então percorre todos os nos
+        //Arvore vazia
+        if(vazia())
+            return 0;
+        //caso base
+        //else if de verificação de folha
+        else if (raizArvore.getDireita()== null && raizArvore.getEsquerda() == null ) {
+            //nao tem o pq colocar quantidadeDeNosFolha(raizArvore.getEsquerda())+quantidadeDeNosFolha(raizArvore.getDireita());
+            //pq a chamada vai ser NULL,mas para eu entener melhor eu prefiro assim
+            return 1+quantidadeDeNosFolha(raizArvore.getEsquerda())+quantidadeDeNosFolha(raizArvore.getDireita());
+        }
+        else {
+            return quantidadeDeNosFolha(raizArvore.getEsquerda())+quantidadeDeNosFolha(raizArvore.getDireita());
+        }
     }
 }
