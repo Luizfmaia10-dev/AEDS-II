@@ -293,4 +293,61 @@ public class ABB<E extends Comparable<E>> {
         return produto;
 
     }
+    public int SomarNOFolha(No <E> raizArvore){
+        if (raizArvore == null) {
+            return 0;
+        }
+        if(raizArvore.getDireita()== null &&  raizArvore.getEsquerda() == null){
+            /*
+            soma+=(int) raizArvore.getItem();
+            return soma;
+            Mesma coisa do return a baixo
+            */
+            return (int) raizArvore.getItem();
+        }
+        int soma =0;
+        soma += SomarItens(raizArvore.getEsquerda());
+        soma += SomarItens(raizArvore.getDireita());
+
+        return soma;
+
+    }
+    ///Nós internos (Pais): Funcionam apenas como "carteiros"
+    // Eles recebem as somas das folhas vindas de baixo e repassam para cima.
+
+    ///Nós folhas: São as "fábricas".
+    //São os únicos que realmente pegam o getItem() e enviam o número para os carteiros levarem.
+    public int ProdutoNOFolha(No <E> raizArvore){
+        if (raizArvore == null) {
+            return 0;
+        }
+        if(raizArvore.getEsquerda()== null &&  raizArvore.getDireita() == null){
+            return (int) raizArvore.getItem();
+        }
+        int produto =0;
+        produto *= ProdutoItens(raizArvore.getEsquerda());
+        produto *= ProdutoItens(raizArvore.getDireita());
+        return produto;
+    }
+
+
+
+    public int somaNoFolhaPt2(No <E> raizArvore){
+        if (raizArvore == null) {
+            return 0;
+        }
+        if(raizArvore.getEsquerda()== null &&  raizArvore.getDireita() == null){
+            return (int) raizArvore.getItem();
+        }
+        return somaNoFolhaPt2(raizArvore.getEsquerda())+ somaNoFolhaPt2(raizArvore.getDireita());
+    }
+    public int ProdutoNOFolhaPt2(No <E> raizArvore){
+        if (raizArvore == null) {
+            return 0;
+        }
+        if(raizArvore.getEsquerda()== null &&  raizArvore.getDireita() == null){
+            return (int) raizArvore.getItem();
+        }
+        return ProdutoNOFolhaPt2(raizArvore.getEsquerda()) * ProdutoNOFolhaPt2(raizArvore.getDireita());
+    }
 }
