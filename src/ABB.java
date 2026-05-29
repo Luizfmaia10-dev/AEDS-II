@@ -250,7 +250,7 @@ public class ABB<E extends Comparable<E>> {
         if(vazia())
             return 0;
         else 
-            return  1+quantidadeDeNos(raiz.getEsquerda())+quantidadeDeNos(raiz.getDireita());
+            return  1+quantidadeDeNos(raizArvore.getEsquerda())+quantidadeDeNos(raizArvore.getDireita());
     }
     public int quantidadeDeNosFolha(No<E> raizArvore) {
         //A recursão vai e volta então percorre todos os nos
