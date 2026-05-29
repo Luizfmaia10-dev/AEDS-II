@@ -312,6 +312,7 @@ public class ABB<E extends Comparable<E>> {
         return soma;
 
     }
+
     ///Nós internos (Pais): Funcionam apenas como "carteiros"
     // Eles recebem as somas das folhas vindas de baixo e repassam para cima.
 
@@ -334,16 +335,37 @@ public class ABB<E extends Comparable<E>> {
 
     public int somaNoFolhaPt2(No <E> raizArvore){
         if (raizArvore == null) {
-            return 0;
+            return 1;
         }
         if(raizArvore.getEsquerda()== null &&  raizArvore.getDireita() == null){
             return (int) raizArvore.getItem();
         }
         return somaNoFolhaPt2(raizArvore.getEsquerda())+ somaNoFolhaPt2(raizArvore.getDireita());
     }
+    //        10
+    //       /  \
+    //      5    8
+    //     / \    \
+    //    2   3    4
+
+    // folhas 2, 3, 4
+
+    //Chamamos:ProdutoNOFolhaPt2(10) //começamos pela raiz da Arvore mesmo
+
+    //Não é null.
+    //
+    //Não é folha.
+
+    //Executa:
+    //
+    //ProdutoNOFolhaPt2(5)
+    //*
+    //ProdutoNOFolhaPt2(8)
+
+
     public int ProdutoNOFolhaPt2(No <E> raizArvore){
         if (raizArvore == null) {
-            return 0;
+            return 1;
         }
         if(raizArvore.getEsquerda()== null &&  raizArvore.getDireita() == null){
             return (int) raizArvore.getItem();
