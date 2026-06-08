@@ -367,6 +367,7 @@ public class ABB<E extends Comparable<E>> {
         if (raizArvore == null) {
             return 1;
         }
+        //Verificando se é folha
         if(raizArvore.getEsquerda()== null &&  raizArvore.getDireita() == null){
             return (int) raizArvore.getItem();
         }
