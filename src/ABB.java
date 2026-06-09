@@ -372,4 +372,419 @@ public class ABB<E extends Comparable<E>> {
         }
         return ProdutoNOFolhaPt2(raizArvore.getEsquerda()) * ProdutoNOFolhaPt2(raizArvore.getDireita());
     }
+    public void caminhamentoPreOrdem(No <E> raizArvore){
+        caminhamentoPreOrdem(raizArvore.getEsquerda());
+        caminhamentoPreOrdem(raizArvore.getDireita());
+        System.out.println(raizArvore.getItem());
+    }
+    public void caminhamentoPosOrdem(No <E> raizArvore){
+        System.out.println(raizArvore.getItem());
+        caminhamentoPosOrdem(raizArvore.getEsquerda());
+        caminhamentoPosOrdem(raizArvore.getDireita());
+    }
+    public void caminhamentoDecrescente(No <E> raizArvore){
+        caminhamentoDecrescente(raizArvore.getDireita());
+        System.out.println(raizArvore.getItem());
+        caminhamentoDecrescente(raizArvore.getEsquerda());
+    }
+    public E obterMenorValor(No <E> raizArvore){
+        if (raizArvore == null) {
+            return null;
+        }
+        if(raizArvore.getEsquerda()==null){
+            return raizArvore.getItem();
+        }
+        raizArvore = raizArvore.getEsquerda();
+        return obterMenorValor(raizArvore);
+    }
+    public E obterMaiorValor(No <E> raizArvore){
+        if (raizArvore == null) {
+            return null;
+        }
+        if(raizArvore.getDireita()==null){
+            return raizArvore.getItem();
+        }
+        raizArvore = raizArvore.getDireita();
+        return obterMaiorValor(raizArvore);
+    }
+    public ABB<E> clone(){
+        ABB<E> clone = new ABB<>();
+        clonar(this.raiz,clone);
+        return clone;
+    }
+    public void clonar(No <E> raizArvore, ABB<E> clone){
+        if (raizArvore == null) {
+            return;
+        }
+        clone.adicionar(raizArvore.getItem());
+        clonar(raizArvore.getEsquerda(), clone);
+        clonar(raizArvore.getDireita(), clone);
+    }
+    //mplemente a função public ABB<E> obterSubconjuntoMaiores(E item),
+    //capaz de criar e retornar um subconjunto da árvore binária de busca formado apenas pelos
+    //elementos da ABB que são maiores ou iguais ao item passado como parâmetro para esse
+    //método. A determinação dos elementos da árvore binária de busca que são maiores ou
+    //iguais ao item informado como parâmetro para o método deve basear-se no(s) critério(s)
+    //empregado(s) na implementação do método public int compareTo(E
+    //outroItem) do item armazenado na ABB.
+    //Se não for encontrado, na árvore binária de busca, nenhum elemento correspondente ao
+    //passado como parâmetro para esse método, uma exceção deve ser lançada.
+    //Sugestão: empregue os métodos clone, do nó e da árvore binária de busca,
+    //implementados anteriormente.
+    public ABB<E> obterSubconjuntoMaiores(E item){
+        ABB<E> subconjunto = new ABB<>();
+        subconjuntomaioreigual(this.raiz,subconjunto,item);
+        if (subconjunto.vazia())
+            throw new NoSuchElementException("Nenhum elemento maior ou igual encontrado!");
+        return subconjunto;
+    }
+    public ABB<E> subconjuntomaioreigual(No <E> raizArvore,ABB <E> subconj,E item){
+        if (raizArvore == null) {
+            return subconj;
+        }
+        if(raizArvore.getItem()>=item){
+            subconj.adicionar(raizArvore.getItem());
+        }
+        subconjuntomaioreigual(raizArvore.getEsquerda(),subconj,item);
+        subconjuntomaioreigual(raizArvore.getDireita(),subconj,item);
+    }
+    public boolean ehRaiz(E item){
+        if(this.raiz==null){
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        }
+        if(this.raiz.getItem().equals(item)){
+            return true;
+        }
+        return false;
+    }
+    //Implemente o método public E obterAntecessor(E item), capaz de recuperar
+    //e retornar o maior elemento armazenado na árvore binária de busca que seja menor do que
+    //o item informado como parâmetro para esse método. A determinação dos elementos da
+    //árvore binária de busca que são menores ou iguais ao item passado como parâmetro para o
+    //método deve basear-se no(s) critério(s) empregado(s) na implementação do método
+    //public int compareTo(E outroItem) do item armazenado na ABB.
+    //Se não for encontrado, na árvore binária de busca, nenhum elemento correspondente ao
+    //passado como parâmetro para esse método, ou o item informado como parâmetro não
+    //apresentar antecessor na árvore binária de busca, uma exceção deve ser lançada.
+
+    // O ANTECESSOR de um nó é o maior elemento MENOR que ele
+// Ou seja, o vizinho imediato à esquerda na sequência em ordem crescente
+//
+//        10
+//       /  \
+//      5    15
+//     / \
+//    3   8
+//         \
+//          9
+//
+// Sequência em ordem: 3 → 5 → 8 → 9 → 10 → 15
+//                                    ↑
+//                         antecessor do 10 = 9
+//
+// Caso 1 — nó TEM sub-árvore esquerda:
+//   antecessor = nó mais à DIREITA da sub-árvore esquerda
+//   ex: antecessor do 10 → desce para 5 → vai para 8 → vai para 9 → para (sem direita)
+//
+// Caso 2 — nó NÃO TEM sub-árvore esquerda:
+//   antecessor = ancestral mais próximo pelo qual desceu à direita
+//   ex: antecessor do 15 → 10 (pois 15 não tem sub-árvore esquerda)
+
+    public E obterAntecessor(E item){
+        if(this.raiz==null){
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        }
+        E valor = null;
+        valor = obterAnt(valor,this.raiz,item);
+        if(valor == null)
+            throw new NoSuchElementException("Antecessor não encontrado!");
+        return valor;
+    }
+    public E obterAnt(E valor, No <E> raizArvore, E item){
+        /// CASO BASE:Valor não encontrado
+        if(raizArvore==null){
+            return valor;
+        }
+        //Busca Binaria pela esquerda,ou seja o item e menor doq a raiz
+        if(raizArvore.getItem()>item){
+            return obterAnt(valor,raizArvore.getEsquerda(),item);
+        }
+        //Busca Binaria pela direita,ou seja o item e maior doq a raiz
+        if(raizArvore.getItem()<item){
+            //Caso 1 → nó TEM sub-árvore esquerda
+            //  antecessor = mais à direita da sub-árvore esquerda
+            //
+            //Caso 2 → nó NÃO TEM sub-árvore esquerda
+            //  antecessor = ancestral mais próximo pelo qual
+            //               você desceu pela direita
+            valor=raizArvore.getItem();
+            return obterAnt(valor,raizArvore.getDireita(),item);
+        }
+        //Achamos o item então aplicamos o anteccessor nele
+        //a funcao procurarvalor que vai procurar o antecessor mesmo,ate agr so foi pesquisa binaria
+        //pelo antecesso ser o elemento mais a direit na subarvore da esquerda ja passamos a subarvore da esquerda ja que o codigo é recursivo
+        if(raizArvore.getItem().equals(item)){
+            valor=procuraValor(valor,raizArvore.getEsquerda(),item);
+            return valor;
+        }
+    }
+    public E procuraValor(E valor, No <E> raizArvore, E item){
+        if(raizArvore==null){
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        }
+        //vamos até a direita infinito(ate encontrar null)
+        //pois queremos o filho mais a direita
+        if(raizArvore.getDireita()!=null){
+            return procuraValor(valor,raizArvore.getDireita(),item);
+        }
+        valor=raizArvore.getItem();
+        return valor;
+    }
+    //        10
+    //       /  \
+    //      5    15
+    //     / \
+    //    3   8
+    //         \
+    //          9
+    //
+    //Antecessor do 10 = 9
+    //(maior elemento menor que 10 → desce sub-árvore esquerda → mais à direita)
+    /// ===============================================================================================
+    /// ===============================================================================================
+    /// ===============================================================================================
+    ///
+    ///
+    // O SUCESSOR de um nó é o menor elemento MAIOR que ele
+// Ou seja, o vizinho imediato à direita na sequência em ordem crescente
+//
+//        10
+//       /  \
+//      5    15
+//           /
+//          12
+//           \
+//            13
+//
+// Sequência em ordem: 5 → 10 → 12 → 13 → 15
+//                          ↑
+//                  sucessor do 10 = 12
+//
+// Caso 1 — nó TEM sub-árvore direita:
+//   sucessor = nó mais à ESQUERDA da sub-árvore direita
+//   ex: sucessor do 10 → desce para 15 → vai para 12 → para (sem esquerda)
+//
+// Caso 2 — nó NÃO TEM sub-árvore direita:
+//   sucessor = ancestral mais próximo pelo qual desceu à esquerda
+//   ex: sucessor do 13 → 15 (pois 13 não tem sub-árvore direita)
+    public E obterSucessor(E item){
+        if(this.raiz==null){
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        }
+        E valor = null;
+        valor = obterSuc(valor,this.raiz,item);
+        if(valor == null){
+            throw new NoSuchElementException("Sucessor nao encontrado!");
+        }
+        return valor;
+    }
+    public E obterSuc(E valor, No <E> raizArvore, E item){
+        /// CASO BASE:Valor não encontrado
+        if(raizArvore==null){
+            return valor;
+        }
+        //Busca Binaria pela esquerda,ou seja o item e menor doq a raiz
+        if(raizArvore.getItem()>item){
+            return obterSuc(valor,raizArvore.getEsquerda(),item);
+        }
+        //Busca Binaria pela direita,ou seja o item e maior doq a raiz
+        if(raizArvore.getItem()<item){
+            //Caso 1 → nó TEM sub-árvore esquerda
+            //  antecessor = mais à direita da sub-árvore esquerda
+            //
+            //Caso 2 → nó NÃO TEM sub-árvore esquerda
+            //  antecessor = ancestral mais próximo pelo qual
+            //               você desceu pela direita
+            valor=raizArvore.getItem();
+            return obterSuc(valor,raizArvore.getDireita(),item);
+        }
+        //Achamos o item então aplicamos o sucessor nele
+        //a funcao procurarvalorsuc que vai procurar o sucessor mesmo,ate agr so foi pesquisa binaria
+        //pelo sucessor ser o elemento mais a esquerda na subarvore da direita ja passamos a subarvore da direita ja que o codigo é recursivo
+        if(raizArvore.getItem().equals(item)){
+            valor=procuraValorSuc(valor,raizArvore.getDireita(),item);
+            return valor;
+        }
+    }
+    public E procuraValorSuc(E valor, No <E> raizArvore, E item){
+        if(raizArvore==null){
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        }
+        //vamos a esuqerda infinito ja que o sucessor sempre e o elemento mais a esauerda da sub arvore da direita
+        if(raizArvore.getEsquerda()!=null){
+            return obterSuc(valor,raizArvore.getEsquerda(),item);
+        }
+        valor=raizArvore.getItem();
+        return valor;
+    }
+    //        10
+    //       /  \
+    //      5    15
+    //           /
+    //          12
+    //           \
+    //            13
+    //
+    //Sucessor do 10 = 12
+    //(menor elemento maior que 10 → desce sub-árvore direita → mais à esquerda)
+
+    public int obterAltura(){
+        if(this.raiz==null){
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        }
+        No <E> subarvoreesq=this.raiz.getEsquerda();
+        No <E> subarvoredir=this.raiz.getDireita();
+        return 1+Math.max(subarvoredir.getAltura(),subarvoreesq.getAltura());
+    }
+    public int obterNivel(No<E> raizArvore,E item){
+        if(raizArvore==null){
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        }
+        //vamos para direita
+        if(raizArvore.getItem()<item){
+            return 1+obterNivel(raizArvore.getDireita(),item);
+        }
+        if(raizArvore.getItem()>item){
+            return 1+obterNivel(raizArvore.getEsquerda(),item);
+        }
+        if(raizArvore.getItem().equals(item)){
+            return 0;
+        }
+    }
+    public int obterGrau(E item){
+        if(this.raiz==null){
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        }
+        int grau=0;
+        grau=obterGrauu(this.raiz,item);
+        return grau;
+    }
+    public int obterGrauu(No<E> raizArvore, E item){
+        if(raizArvore==null){
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        }
+        if(raizArvore.getItem()<item){
+            return obterGrauu(raizArvore.getDireita(),item);
+        }
+        if(raizArvore.getItem()>item){
+            return obterGrauu(raizArvore.getEsquerda(),item);
+        }
+        //ele pode ter grau 0,1 ou 2
+        if(raizArvore.getItem().equals(item)){
+            //so tem filho esq
+            if(raizArvore.getEsquerda()!=null && raizArvore.getDireita()==null){
+                return 1;
+            }
+            //so tem filho dir
+            if(raizArvore.getDireita()!=null && raizArvore.getEsquerda()==null){
+                return 1;
+            }
+            //n tem filho nem na esq e nem na dir
+            if(raizArvore.getEsquerda()==null && raizArvore.getDireita()==null){
+                return 0;
+            }
+            //filho a esq e a dir
+            if(raizArvore.getDireita()!=null && raizArvore.getEsquerda()!=null){
+                return 2;
+            }
+        }
+    }
+    public boolean ehFolha(E item){
+        if(this.raiz==null){
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        }
+        return ehFolhaaux(this.raiz,item);
+    }
+    public boolean ehFolhaaux(No<E> raizArvore,E item){
+        if(raizArvore.getItem()<item){
+            return ehFolhaaux(raizArvore.getDireita(),item);
+
+        }
+        if(raizArvore.getItem()>item){
+            return ehFolhaaux(raizArvore.getEsquerda(),item);
+
+        }
+        if(raizArvore.getItem().equals(item)){
+            if(raizArvore.getEsquerda()==null && raizArvore.getDireita()==null){
+                return true;
+            }
+
+        }
+        return false;
+
+    }
+    // Um nó é ancestral de outro se ele está no caminho da raiz até esse nó
+// Exemplo:
+//
+//        10          ← ancestral de 3, 5, 2, 4
+//       /  \
+//      5    15       ← 5 é ancestral de 3, 8, 2, 4
+//     / \
+//    3   8
+//   / \
+//  2   4             ← 2 e 4 não têm ancestrais além de 10, 5, 3
+//
+// Para verificar se X é ancestral de Y:
+// basta achar X na árvore e verificar se Y está na sub-árvore de X
+//
+// Ancestrais do nó 2: 3 → 5 → 10 (do mais próximo ao mais distante)
+// Ancestrais do nó 8: 5 → 10
+// Ancestrais do nó 10: nenhum (é a raiz)
+    public boolean ehAncestral(E item, E ancestral){
+        if(this.raiz==null){
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        }
+        if(ancestral==null){
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        }
+        return ehAncestralAux(item,ancestral,this.raiz);
+
+    }
+    public boolean ehAncestralAux(E item, E ancestral,No <E> raizArvore){
+        if(raizArvore==null){
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        }
+        if(raizArvore.getItem()>ancestral){
+            return ehAncestralAux(item,ancestral,raizArvore.getEsquerda());
+
+        }
+        if(raizArvore.getItem()<ancestral){
+            return ehAncestralAux(item,ancestral,raizArvore.getDireita());
+        }
+        if(raizArvore.getItem().equals(ancestral)){
+            return ehAncestralAux2(item,ancestral,raizArvore);
+        }
+        return false;
+    }
+    public boolean ehAncestralAux2(E item, E ancestral, No <E> raizArvore){
+        if(raizArvore==null){
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        }
+        if(ancestral==null){
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        }
+        if(raizArvore.getItem().equals(item)){
+            return true;
+        }
+        //o ancestral e inutil nesse funcão toda
+        if(ehAncestralAux2(item,ancestral, raizArvore.getEsquerda()) == true){
+            return true;
+        }
+        if(ehAncestralAux2(item,ancestral, raizArvore.getDireita()) == true){
+            return true;
+        }
+        return false;
+
+    }
+
 }
