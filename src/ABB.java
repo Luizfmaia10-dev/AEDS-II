@@ -786,5 +786,41 @@ public class ABB<E extends Comparable<E>> {
         return false;
 
     }
+    public int obterSoma(){
+        if(vazia())
+            throw new NoSuchElementException("Nenhum elemento encontrado!");
+        int soma = 0;
+        soma=obterSomaAUX(this.raiz);
+        return soma;
+    }
+    public int obterSomaAUX(No<E> raizArvore){
+        if(raizArvore==null)
+            return 0;
+        return raizArvore.getItem()+obterSomaAUX(raizArvore.getDireita()) + obterSomaAUX(raizArvore.getEsquerda());
+    }
+    public boolean contemSubarvore(ABB<E> outra){
+        if(outra==null)
+            return false;
+        No <E> outraraiz=outra.raiz;
+        return contemSubarvoreAUX(outra,this.raiz,outraraiz);
+    }
+    public boolean contemSubarvoreAUX(ABB<E> outra,No <E> raizArvore,No <E> raizArvore2){
+        if(raizArvore2==null)
+            return true;
+        if(raizArvore2<raizArvore){
+            return contemSubarvoreAUX(outra,raizArvore.getEsquerda(),raizArvore2);
+        }
+        if(raizArvore2>raizArvore){
+            return contemSubarvoreAUX(outra,raizArvore.getDireita(),raizArvore2);
+        }
+        if(raizArvore2.equals(raizArvore)){
+            contemSubarvoreAUX(outra,raizArvore.getDireita(),raizArvore2.getDireita());
+            contemSubarvoreAUX(outra, raizArvore.getEsquerda(), raizArvore2.getEsquerda());
+            if(raizArvore2!=raizArvore){
+                return false;
+            }
+        }
+
+    }
 
 }
