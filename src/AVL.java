@@ -184,6 +184,11 @@ public class AVL<K, V> extends ABB<K, V> {
         No<K, V> filhoDireitaEsquerda;  // triângulo vermelho
         z=p.getDireita();
         filhoDireitaEsquerda=z.getEsquerda();
+        p.setDireita(filhoDireitaEsquerda);
+        z.setDireita(p);
+        p.setAltura();
+        z.setAltura();
+        return z;
 
 
 
