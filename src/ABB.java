@@ -842,6 +842,43 @@ public class ABB<E extends Comparable<E>> {
     //direita do 10  → altura 1
     //Se você somar, dá 3 — mas o número de níveis é 3 apenas pelo lado esquerdo
     //vamos usar o math.max que é  método que pega o maior entre dois valores
+    ///Uma árvore é completa quando todos os nós internos têm dois filhos e todas as folhas estão no mesmo nível.
+    /// ================================================================
+    ///Uma árvore é completa quando todos os nós internos têm dois filhos e todas as folhas estão no mesmo nível.
+    //Completa ✅          Não completa ❌
+    //        10                10
+    //       /  \              /  \
+    //      5    15           5    15
+    //     / \   / \         /
+    //    3   8 13  20      3
+    public boolean ehCompleta(){
+        if(vazia())
+            return false;
+        boolean statusfilho=false;
+        boolean statusnivel=false;
+        statusfilho=ehCompletaAUXFILHO(this.raiz);
+        statusnivel=ehCompletaAUXNIVEL(this.raiz);
+        return(statusfilho && statusNivel);
+
+    }
+    public boolean ehCompletaAUXFILHO(No<E> raiz){
+        if(raiz==null)
+            return true;
+        if(raiz.getEsquerda()==null && raiz.getDireita()!=null){
+            return false;
+        }
+        if(raiz.getEsquerda()!=null && raiz.getDireita()==null){
+            return false;
+        }
+        return ehCompletaAUXFILHO(raiz.getEsquerda()) && ehCompletaAUXFILHO(raiz.getDireita());
+
+    }
+    public boolean ehCompletaAUXNIVEL(No<E> raiz){
+        if(raiz.getEsquerda() == null && raiz.getDireita() == null){
+            if(obterNivel())
+        }
+
+    }
 
 
 
