@@ -821,8 +821,6 @@ public class ABB<E extends Comparable<E>> {
             return 0;
         int quantidade = 0;
         quantidade=obterQuantidadeNiveisAUX(this.raiz);
-        quantidade--;
-        //tiramos 1 pois o primeiro nivel é 0 e no codigo ele esta sendo contado
         return quantidade;
     }
     public int obterQuantidadeNiveisAUX(No<E> raiz){
@@ -844,6 +842,7 @@ public class ABB<E extends Comparable<E>> {
     //direita do 10  → altura 1
     //Se você somar, dá 3 — mas o número de níveis é 3 apenas pelo lado esquerdo
     //vamos usar o math.max que é  método que pega o maior entre dois valores
+
 
 
 }
