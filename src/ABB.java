@@ -804,23 +804,46 @@ public class ABB<E extends Comparable<E>> {
         No <E> outraraiz=outra.raiz;
         return contemSubarvoreAUX(outra,this.raiz,outraraiz);
     }
-    public boolean contemSubarvoreAUX(ABB<E> outra,No <E> raizArvore,No <E> raizArvore2){
-        if(raizArvore2==null)
+    public boolean contemSubarvoreAUX(ABB<E> outra, No<E> raizArvore, No<E> raizArvore2){
+        if(raizArvore2 == null)
             return true;
-        if(raizArvore2<raizArvore){
-            return contemSubarvoreAUX(outra,raizArvore.getEsquerda(),raizArvore2);
-        }
-        if(raizArvore2>raizArvore){
-            return contemSubarvoreAUX(outra,raizArvore.getDireita(),raizArvore2);
-        }
-        if(raizArvore2.equals(raizArvore)){
-            contemSubarvoreAUX(outra,raizArvore.getDireita(),raizArvore2.getDireita());
-            contemSubarvoreAUX(outra, raizArvore.getEsquerda(), raizArvore2.getEsquerda());
-            if(raizArvore2!=raizArvore){
-                return false;
-            }
-        }
+        if(raizArvore == null)
+            return false;
+        //significa que chegou no fim da árvore atual sem encontrar o elemento.
 
+        if(raizArvore2.getItem().compareTo(raizArvore.getItem()) < 0)
+            return contemSubarvoreAUX(outra, raizArvore.getEsquerda(), raizArvore2);
+        if(raizArvore2.getItem().compareTo(raizArvore.getItem()) > 0)
+            return contemSubarvoreAUX(outra, raizArvore.getDireita(), raizArvore2);
     }
+    public int obterQuantidadeNiveis(){
+        if(vazia())
+            return 0;
+        int quantidade = 0;
+        quantidade=obterQuantidadeNiveisAUX(this.raiz);
+        quantidade--;
+        //tiramos 1 pois o primeiro nivel é 0 e no codigo ele esta sendo contado
+        return quantidade;
+    }
+    public int obterQuantidadeNiveisAUX(No<E> raiz){
+        if(raiz==null)
+            return 0;
+        if(raiz.getItem()==null)
+            return 0;
+        return 1+Math.max(obterQuantidadeNiveisAUX(raiz.getEsquerda()),obterQuantidadeNiveisAUX(raiz.getDireita()));
+    }
+    /// NAO PODEMOS USAR ISSO
+    // return 1+obterQuantidadeNiveisAUX(raiz.getEsquerda())+obterQuantidadeNiveisAUX(raiz.getDireita());
+    //Você está somando os níveis da esquerda e da direita, mas deveria pegar o maior entre os dois.
+    //    10
+    //   /  \
+    //  5    15
+    // /
+    //3
+    //esquerda do 10 → altura 2
+    //direita do 10  → altura 1
+    //Se você somar, dá 3 — mas o número de níveis é 3 apenas pelo lado esquerdo
+    //vamos usar o math.max que é  método que pega o maior entre dois valores
+
 
 }
