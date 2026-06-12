@@ -61,6 +61,16 @@ public class No<T extends Comparable<T>> {
     public int getAltura() {
         return this.altura;
     }
+    /// PODEMOS FAZER O SETALTURA ASSIM TBM===============================================
+    //public void setAltura() {
+    //
+    //		int alturaEsquerda, alturaDireita;
+    //
+    //		alturaEsquerda = getAltura(esquerda);
+    //		alturaDireita = getAltura(direita);
+    //		this.altura = 1 + Math.max(alturaEsquerda, alturaDireita);
+    //	}
+    /// ===================================================================================
 
     public void setAltura() {
 

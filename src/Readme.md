@@ -94,7 +94,23 @@ Pior Caso: \(O(n)\)Se os elementos forem inseridos em ordem (ex: 10, 20, 30, 40)
 
 ## ADICIONAR
 
-Agora vamos adicionar um item na arvore 
+Agora vamos adicionar um item na arvore,eh bem similar a busca binaria,SEMPRE VAMOS ADICIONAR ONDE A POSIÇÃO É *NULL* Então nos vamos rodar a arovore todas perguntando se o nosso intem que nos queremos adicionar é maior ou menor que o item que  esta no nó da arvore,caso for maior vamos pra direita,caso nosso item for menor vamos para esquerda
+
+Nesse exemplo agora vamos adicionar o 13
+   
+![Gemini_Generated_Image_p2igpnp2igpnp2ig.png](Gemini_Generated_Image_p2igpnp2igpnp2ig.png)
+
+percebe se que no começo procuramos o local certo para a inserção
+achamos o local que é a esquerda do 15 ja que 13 é maior do que 10 e menor do que 15
+agora nos verficamos se tem açguma coisa então temos que garantir que não tem nenhum filho a esquerda do 15 e inserimos o 13,para inserir fazemos um setItem no No dele
+
+Inserção sempre nas Folhas: Um novo elemento sempre será inserido como um novo nó folha (no final de algum caminho da árvore). O algoritmo nunca substitui ou "empurra" um nó existente para baixo durante a inserção simples; ele apenas encontra o primeiro espaço vazio (null) válido.
+
+Caso Médio / Melhor Caso: $O(\log n)$Se a árvore estiver balanceada (como na imagem), o tempo de busca é logarítmico. A cada decisão (esquerda ou direita), você descarta metade dos nós restantes.
+
+Pior Caso: $O(n)$Se os dados forem inseridos já ordenados (ex: 1, 2, 3, 4, 5), a árvore se torna "degenerada" (parecida com uma lista encadeada). Nesse cenário, a árvore perde sua eficiência, pois a altura $h$ fica igual ao número de nós $n$.
+
+
 
 
 
