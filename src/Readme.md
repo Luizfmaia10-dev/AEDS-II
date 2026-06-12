@@ -224,6 +224,16 @@ caminhamentoEmOrdem(raizArvore.getDireita());
 
 ![Gemini_Generated_Image_3y68ud3y68ud3y68.png](Gemini_Generated_Image_3y68ud3y68ud3y68.png)
 
+DICA:Caso quiser trocar a ordem de impressão,ou seja imprimir os maiores e depois os menores e so trocar no codigo as chamas então fica:
+
+public void caminhamentoEmOrdem(No <E> raizArvore){
+caminhamentoEmOrdem(raizArvore.getDireita());
+System.out.println(raizArvore.getItem());
+caminhamnetoEmOrdem(raizArvore.getEsquerda());
+}
+
+**CAMINHAMENTO PÓS ORDEM**
+
 
 
 
