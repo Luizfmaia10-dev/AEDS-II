@@ -124,7 +124,7 @@ O melhor caminhamneto para entender as posições da arvore
 A raiz sempre vem primiero por isso chama PRÉ ordem,a raiz vem antes
 Se voce salvar a saida e reconstruir a arvore na ordem que saiu vocé terá a arvore originl de volta
 
-*O se caminhamneto é nessa ordem:
+*Ordem do  caminhamneto pré ordem é nessa ordem:
 
 -Raiz
 
@@ -183,6 +183,46 @@ Agora imprimimos os elementos da direita subindo(De baixo para cima):16
 
 ![Gemini_Generated_Image_xk15t4xk15t4xk15.png](Gemini_Generated_Image_xk15t4xk15t4xk15.png)
 
+**CAMINHAMENTO EM ORDEM**
+Impressão dos elementos da arvore do menor para o menor
+Nesse tipo de caminhamento começamos pela Subarvore da esquerda e depois emprimos a raiz e depois a subarvore da diretia
+
+Então sua orde de caminhamento é essa:
+
+-Visita SubArvore da esquerda;
+
+-Printa a raiz;
+
+-Visita SubArvore da direita;
+
+**CODIGO**
+
+public void caminhamentoEmOrdem(No <E> raizArvore){
+caminhamnetoEmOrdem(raizArvore.getEsquerda());
+System.out.println(raizArvore.getItem());
+caminhamentoEmOrdem(raizArvore.getDireita());
+}
+
+//  Caminhamento Em-Ordem: Esquerda -> Raiz -> Direita
+  Resultado esperado: [2, 3, 4, 5, 8, 10, 13, 15, 16]
+
+            _______[10]_______           <- 6° (Visita a Raiz Geral)
+           /                  \
+       __[5]__              _[15]_       
+      /       \            /      \
+    [3]       [8]        [13]    [16]    
+    / \       /           /        \     
+   [2] [4]   (Fim)       (Fim)    (Fim) 
+
+2 na esquerda do 3 
+
+4 na direita do 3
+
+//  Ordem exata dos passos:
+
+//  1º: [2] -> 2º: [3] -> 3º: [4] -> 4º: [5] -> 5º: [8] -> 6º: [10] -> 7º: [13] -> 8º: [15] -> 9º: [16]
+
+![Gemini_Generated_Image_3y68ud3y68ud3y68.png](Gemini_Generated_Image_3y68ud3y68ud3y68.png)
 
 
 
