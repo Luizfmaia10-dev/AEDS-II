@@ -110,8 +110,70 @@ Caso Médio / Melhor Caso: $O(\log n)$Se a árvore estiver balanceada (como na i
 
 Pior Caso: $O(n)$Se os dados forem inseridos já ordenados (ex: 1, 2, 3, 4, 5), a árvore se torna "degenerada" (parecida com uma lista encadeada). Nesse cenário, a árvore perde sua eficiência, pois a altura $h$ fica igual ao número de nós $n$.
 
+----------------------------------
+
+## CAMINHAMENTO
+Para nos percorremos a arvore e printar ela(por completa)nos temos tres modos diferentes,caminhamentos pré ordem,em ordem e pós ordem
+para a gente fazer esse caminhamentos vamos usar principalemnte a RECURSÃO
+Formula para saber o numero de chamadas:2n+1
+Temos que verificar se a raiz é diferente de NULL
+
+**Caminhamento PRÉ ORDEM**
+Nesse tipo de caminhamento voce começa imprimindo a raiz depois as diversas subarvores
+O melhor caminhamneto para entender as posições da arvore
+A raiz sempre vem primiero por isso chama PRÉ ordem,a raiz vem antes
+Se voce salvar a saida e reconstruir a arvore na ordem que saiu vocé terá a arvore originl de volta
+
+*O se caminhamneto é nessa ordem:
+
+-Raiz
+
+-Esquerda
+
+-Direita
+
+**CODIGO**
+
+public void caminhamentoPreOrdem(No <E> raizArvore){
+//verificamos se esta vazia
+if(raizArvore!=null){
+   System.out.println(raizArvore.getItem());      //RAIZ
+   caminhamentoPreOrdem(raizArvore.getEsquerda());//ESQUERDA
+   caminhamentoPreOrdem(raizArvore.getDireita()); //DIREITA
+ }
+}
+
+Para saber melhor esse CaminhamentoPreOrdem fiz um MACETE:primeiro emprimimos a raiz da arvore,depois todos os elementos a sua esquerda,e como se vc desse um getesquerda e ja printasse,e depois nesse mesma subarvore da esquerda quando acabar de imprimir toda a esquerda imprima os elementos da direita da subarvore da esquerda subindo,depois disso vamos para a subarvore da direita,nela vamos imprimir,todos os ekekmntos da esquerda dessa subarvore a direita da nossa raiz principal e depois imprimimos os da direta subindo
 
 
+EX:Uma arvore 10,5,15,3,8,13,16,2,4
+
+
+Imprimimos a raiz:10
+
+
+--Vamos para a subarvore a esquerda do 20--
+
+
+Imprimimos toda a esquerda:5,3,2
+
+
+Agora pegamos a direita subindo(De baixo para cima):4,8
+
+
+--Agora vamos para a subarvore a direita do 10---
+
+
+Imprimimos toda a sua esq(Maiz primiero imprimimos a subarvore dessa raiz(15)):15,13
+
+
+Agora imprimimos os elementos da direita subindo(De baixo para cima):16
+
+--Agora Juntamos tudo fica:--
+
+10,5,3,2,4,8,15,13,16
+
+![Gemini_Generated_Image_xk15t4xk15t4xk15.png](Gemini_Generated_Image_xk15t4xk15t4xk15.png)
 
 
 
