@@ -870,12 +870,15 @@ public class ABB<E extends Comparable<E>> {
         if(raiz.getEsquerda()!=null && raiz.getDireita()==null){
             return false;
         }
+        if(raiz.getEsquerda()==null && raiz.getDireita()==null){
+
+        }
         return ehCompletaAUXFILHO(raiz.getEsquerda()) && ehCompletaAUXFILHO(raiz.getDireita());
 
     }
     public boolean ehCompletaAUXNIVEL(No<E> raiz){
         if(raiz.getEsquerda() == null && raiz.getDireita() == null){
-            if(obterNivel())
+            if()
         }
 
     }
