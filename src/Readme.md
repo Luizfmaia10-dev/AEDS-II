@@ -148,6 +148,14 @@ Para saber melhor esse CaminhamentoPreOrdem fiz um MACETE:primeiro emprimimos a 
 
 EX:Uma arvore 10,5,15,3,8,13,16,2,4
 
+            _______[10]_______
+            /                  \
+       __[5]__              _[15]_
+      /       \            /      \
+    _[3]_       [8]      [13]    [16]
+    /   \
+  [2]   [4]
+
 
 Imprimimos a raiz:10
 
