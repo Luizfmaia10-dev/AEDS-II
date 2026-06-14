@@ -233,6 +233,11 @@ caminhamnetoEmOrdem(raizArvore.getEsquerda());
 }
 
 **CAMINHAMENTO PÓS ORDEM**
+Nesse caminhamento nos visitamos a raiz por ultimo
+primeiro vamos pea esquerda na sua raiz mais profunda,depois a direita mais profunda tbm e depois subimos até a raiz
+
+
+
 
 
 
