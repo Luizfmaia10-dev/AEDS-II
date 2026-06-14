@@ -263,6 +263,8 @@ agora a subarover raiz da direita 50
 
 e por ultimo a raiz da subarvore 40
 
+resultado:5,15,10,35,30,25,20,45,55,75,70,60,50,40
+
 **CODIGO**
 
 public void caminhamentoPreOrdem(No <E> raizArvore){
