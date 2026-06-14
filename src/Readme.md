@@ -236,7 +236,40 @@ caminhamnetoEmOrdem(raizArvore.getEsquerda());
 Nesse caminhamento nos visitamos a raiz por ultimo
 primeiro vamos pea esquerda na sua raiz mais profunda,depois a direita mais profunda tbm e depois subimos até a raiz
 
+![CAMINHAMENTOPOSORDEMIMG](Screenshot_1.png)
 
+nesse exemplo veja o macete que eu desenvolvi:
+primeiro emprimimos a esquerda e a direita da arvoer começando de baixo para cima e quando chega na raiz principal da arvore pulamos ela e vamos para o ourto lado repetindo o processo so que descendo agora,ent emprimimos a esquerda descendo na subarvoer das direita e depois os elementos da direita subindo
+
+acompanhe no exemplo fica:5,15,10---ate agora pegamos esq(5),15(dir),10 raiz
+
+agora nos pulamos a raiz dessa nossa subarvore e pegamos o elemnto mais a esquerda,como n tem nos vamos pelo elelemntos da direita começando de baixo para cima
+
+entao fica:35,30,25
+
+agora que ja emprimimos toda a subarvoer da esq menos a raiz podemos emprimir  a raiz
+
+raiz,subarovore esq-20
+
+agora vamos para a subarvore da direita mas aqui a gente da uma mudada,nos emprimimos os elemntros da esquerda descendo 
+
+entao fica:45,55
+
+depois por a gente ja esta no fundo emprimimos os elelmntos da direito do fundo para o topo
+
+entao fica:75,70,60
+
+agora a subarover raiz da direita 50
+
+e por ultimo a raiz da subarvore 40
+
+**CODIGO**
+
+public void caminhamentoPreOrdem(No <E> raizArvore){
+caminhamnetoPreOrdem(raizArvore.getEsquerda());
+caminhamentoPreOrdem(raizArvore.getDireita());
+System.out.println(raizArvore.getItem());
+}
 
 
 
