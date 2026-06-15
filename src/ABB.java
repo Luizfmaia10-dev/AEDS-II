@@ -872,6 +872,7 @@ public class ABB<E extends Comparable<E>> {
             return false;
         }
         if(raiz.getEsquerda()==null && raiz.getDireita()==null){
+            return
 
         }
         return ehCompletaAUXFILHO(raiz.getEsquerda()) && ehCompletaAUXFILHO(raiz.getDireita());
@@ -883,7 +884,99 @@ public class ABB<E extends Comparable<E>> {
         }
 
     }
+    public int contarFolhas(No<E> raiz){
+        if(raiz==null)
+            return 0;
+        if(raiz.getEsquerda()==null && raiz.getDireita()==null){
+            return 1;
+        }
+        return contarFolhas(raiz.getEsquerda())+contarFolhas(raiz.getDireita());
+    }
+    public ABB<E> obterSubconjuntoMaiores(E item){
+        ABB<E> subconjuntoMaiores = new ABB<>();
+       return obterSubconjuntoMaioresAUX(item,this.raiz,subconjuntoMaiores);
+    }
+    public ABB<E> obterSubconjuntoMaioresAUX(E item, No<E> raiz,ABB<E> subconjuntoMaiores){
+        if(raiz==null)
+            return null;
+        if(raiz.getItem()>item){
+            subconjuntoMaiores.adicionar(raiz.getItem());
+        }
+        obterSubconjuntoMaioresAUX(item,raiz.getEsquerda(),subconjuntoMaiores);
+        obterSubconjuntoMaioresAUX(item,raiz.getDireita(),subconjuntoMaiores);
+        return subconjuntoMaiores;
+    }
+    //       40
+    //      /  \
+    //    20    50
+    //   /  \
+    //  10  [30]  <-- Se quisermos trocar o 30, o novo valor DEVE estar entre 20 e 40!
+    //problema que pode ocorrer
+    public void substituirItem(E itemAntigo, E itemNovo){
+        if(itemNovo==null)
+            return;
+        if(itemNovo.equals(itemAntigo))
+            throw new IllegalArgumentException("Elemento igual");
+        if(substituirItemPROCURA(E itemAntigo,this.raiz)){
+            //adicionamos o item nesse abb
+        }
+    }
+    public boolean substituirItemPROCURA(E itemAntigo, No<E> raiz){
+        if(itemAntigo==null)
+            return;
+        if(raiz.getItem().equals(itemAntigo)){
+            raiz.setItem(null);
+            return true;
+        }
+        if(itemAntigo>raiz.getItem()){
+            substituirItemPROCURA(itemAntigo,raiz.getDireita());
+        }
+        if(itemAntigo<raiz.getItem()){
+            substituirItemPROCURA(itemAntigo,raiz.getEsquerda());
+        }
 
 
+    }
+    public int contarNosAncestrais(E item){
+        if(item==null)
+            throw new IllegalArgumentException("erro");
+
+        if(item.equals(this.raiz))
+            return 0;
+        int valor=0;
+        //podemos tambem procurar se esse no existe na arvore;
+        valor=contarNosAncestraisAUX(item,this.raiz);
+        return valor;
+    }
+    public int contarNosAncestraisAUX(E item, No<E> raiz){
+        if(item==null)
+            throw new IllegalArgumentException("item não encontrado");
+        if(item>raiz.getItem())
+            return 1+contarNosAncestraisAUX(item,raiz.getDireita());
+        if(item<raiz.getItem()){
+            return 1+contarNosAncestraisAUX(item,raiz.getEsquerda());
+        }
+    }
+    public void removerFolhas(){
+        removerFolhasAUX(this.raiz);
+    }
+    public void removerFolhasAUX(No<E> raiz){
+        if(raiz==null)
+            return;
+        //esse primiero if eu verifico que eu entrei em um no valido
+        if (raiz.getEsquerda() != null) {
+            if (raiz.getEsquerda().getEsquerda() == null && raiz.getEsquerda().getDireita() == null) {
+                raiz.setEsquerda(null); // Remove a folha esquerda com segurança!
+            }
+        }
+        //esse primiero if eu verifico que eu entrei em um no valido
+        if (raiz.getDireita() != null) {
+            if (raiz.getDireita().getEsquerda() == null && raiz.getDireita().getDireita() == null) {
+                raiz.setDireita(null); // Remove a folha direita com segurança!
+            }
+        }
+        removerFolhasAUX(raiz.getEsquerda());
+        removerFolhasAUX(raiz.getDireita());
+    }
 
 }

@@ -273,6 +273,8 @@ caminhamentoPreOrdem(raizArvore.getDireita());
 System.out.println(raizArvore.getItem());
 }
 
+##EXCLUSÃO
+
 
 
 
