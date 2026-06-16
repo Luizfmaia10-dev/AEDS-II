@@ -273,7 +273,95 @@ caminhamentoPreOrdem(raizArvore.getDireita());
 System.out.println(raizArvore.getItem());
 }
 
-##EXCLUSÃO
+## EXCLUSÃO
+Agora vamos iniciar a exclusão de um nó em uma abb
+
+Nos temos 3 casos para remolçao de um no na abb:
+
+-Caso o nó for folha
+
+-Caso o nó tiver 1 filho
+
+-Caso o nó tiver 2 filhos
+
+**Nó Folha**
+Caso o no for folha e mais facil,nos so atualizamos os valores do seus pais e filhos
+
+Basta ir no nó pai e mudar o ponteiro que apontava para o filho (setEsquerda ou setDireita) para null
+
+voce simplemnte deixa seu pai orfã
+
+*CODIGO*
+
+
+// Método público
+
+public void removerCaso1(E item) {
+
+if (vazia()) {
+
+throw new IllegalStateException("Erro: A árvore está vazia.");
+
+}
+
+if (item == null) {
+
+return;
+
+}
+
+    // Caso especial: o item está na raiz e a raiz é uma folha
+    if (this.raiz.getItem().equals(item)) {
+        if (this.raiz.getEsquerda() == null && this.raiz.getDireita() == null) {
+            this.raiz = null; // A árvore agora fica vazia
+            return;
+        } else {
+            throw new IllegalArgumentException("Erro: O item é a raiz, mas ela não é uma folha!");
+        }
+    }
+
+    // Se não for a raiz, chama o auxiliar para buscar a partir do topo
+    removerCaso1AUX(item, this.raiz);
+}
+
+// Método auxiliar (percorre a árvore olhando para os filhos)
+private void removerCaso1AUX(E item, No<E> raiz) {
+if (raiz == null) {
+return; // Caso base: chegou ao fim do caminho e não achou
+}
+
+    // 1. OLHA PARA O FILHO DA ESQUERDA
+    if (raiz.getEsquerda() != null && raiz.getEsquerda().getItem().equals(item)) {
+        // Encontrou o item! Agora valida se ele é REALMENTE uma folha
+        if (raiz.getEsquerda().getEsquerda() == null && raiz.getEsquerda().getDireita() == null) {
+            raiz.setEsquerda(null); // Pai limpa o ponteiro da esquerda! ✅
+            return; // Remoção concluída com sucesso
+        } else {
+            throw new IllegalArgumentException("Erro: O item foi encontrado, mas não é uma folha!");
+        }
+    }
+
+    // 2. OLHA PARA O FILHO DA DIREITA
+    if (raiz.getDireita() != null && raiz.getDireita().getItem().equals(item)) {
+        // Encontrou o item! Agora valida se ele é REALMENTE uma folha
+        if (raiz.getDireita().getEsquerda() == null && raiz.getDireita().getDireita() == null) {
+            raiz.setDireita(null); // Pai limpa o ponteiro da direita! ✅
+            return; // Remoção concluída com sucesso
+        } else {
+            throw new IllegalArgumentException("Erro: O item foi encontrado, mas não é uma folha!");
+        }
+    }
+
+    // 3. SE NÃO ENCONTROU NOS FILHOS DIRETOS, DIRECIONA A BUSCA (Propriedade da ABB)
+    if (item.compareTo(raiz.getItem()) < 0) {
+        removerCaso1AUX(item, raiz.getEsquerda()); // Procura na subárvore esquerda
+    } else {
+        removerCaso1AUX(item, raiz.getDireita());  // Procura na subárvore direita
+    }
+}
+
+Agora Vamos para o caso 2 
+
 
 
 
