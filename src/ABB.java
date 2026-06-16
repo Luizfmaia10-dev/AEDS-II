@@ -1218,13 +1218,26 @@ public class ABB<E extends Comparable<E>> {
         }
         return contarGrauUmAUX(raiz.getEsquerda())+contarGrauUmAUX(raiz.getDireita());
     }
-
-
-
-
-
-
-
-
+    public int contarGrauDois(){
+        return contarGrauDoisAUX(this.raiz);
+    }
+    public int contarGrauDoisAUX(No<E> raiz){
+        if(raiz==null){
+            return 0;
+        }
+        if(raiz.getDireita()!=null && raiz.getEsquerda()!=null){
+            return 1+contarGrauDoisAUX(raiz.getEsquerda())+contarGrauDoisAUX(raiz.getDireita());
+        }
+        return contarGrauDoisAUX(raiz.getEsquerda())+contarGrauDoisAUX(raiz.getDireita());
+    }
+    public int somarItensNo(){
+        return somarItensNoAUX(this.raiz);
+    }
+    public int somarItensNoAUX(No <E> raiz){
+        if(raiz==null){
+            return 0;
+        }
+        return raiz.getItem()+ somarItensNoAUX(raiz.getEsquerda()) + somarItensNoAUX(raiz.getDireita());
+    }
 
 }
