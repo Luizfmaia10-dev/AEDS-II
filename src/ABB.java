@@ -1239,5 +1239,24 @@ public class ABB<E extends Comparable<E>> {
         }
         return raiz.getItem()+ somarItensNoAUX(raiz.getEsquerda()) + somarItensNoAUX(raiz.getDireita());
     }
+    public ABB<E> obterSubconjuntoMenores(E item){
+        ABB<E> subconjuntoMenores = new ABB<>();
+        if(item == null){
+            return subconjuntoMenores;
+        }
+        return obterSubconjuntoMenoresAUX(subconjuntoMenores,this.raiz,item);
+    }
+    public ABB<E> obterSubconjuntoMenoresAUX(ABB <E> subconjMenores, No<E> raiz,E item){
+        if(raiz==null){
+            return null;
+        }
+        if(raiz.getItem()<item){
+            subconjMenores.adicionar(raiz.getItem());
+        }
+        obterSubconjuntoMenoresAUX(subconjMenores,raiz.getEsquerda(),item);
+        obterSubconjuntoMenoresAUX(subconjMenores,raiz.getDireita(),item);
+        return subconjMenores;
+    }
+
 
 }
