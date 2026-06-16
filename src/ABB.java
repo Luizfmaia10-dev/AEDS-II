@@ -282,15 +282,10 @@ public class ABB<E extends Comparable<E>> {
         return soma;
     }
     public int ProdutoItens(No <E> raizArvore){
-        int produto = 0;
         if (raizArvore == null) {
-            return 0;
+            return 1;
         }
-        produto *= ProdutoItens(raizArvore.getEsquerda());
-        produto *= (int) raizArvore.getItem();
-        produto *=  ProdutoItens(raizArvore.getDireita());
-
-        return produto;
+        return raizArvore.getItem()*ProdutoItens(raizArvore.getEsquerda())* ProdutoItens(raizArvore.getDireita());
 
     }
     public int SomarNOFolha(No <E> raizArvore){
@@ -374,14 +369,14 @@ public class ABB<E extends Comparable<E>> {
         return ProdutoNOFolhaPt2(raizArvore.getEsquerda()) * ProdutoNOFolhaPt2(raizArvore.getDireita());
     }
     public void caminhamentoPreOrdem(No <E> raizArvore){
+        System.out.println(raizArvore.getItem());
         caminhamentoPreOrdem(raizArvore.getEsquerda());
         caminhamentoPreOrdem(raizArvore.getDireita());
-        System.out.println(raizArvore.getItem());
     }
     public void caminhamentoPosOrdem(No <E> raizArvore){
-        System.out.println(raizArvore.getItem());
         caminhamentoPosOrdem(raizArvore.getEsquerda());
         caminhamentoPosOrdem(raizArvore.getDireita());
+        System.out.println(raizArvore.getItem());
     }
     public void caminhamentoDecrescente(No <E> raizArvore){
         caminhamentoDecrescente(raizArvore.getDireita());
@@ -596,6 +591,7 @@ public class ABB<E extends Comparable<E>> {
         }
         //Busca Binaria pela esquerda,ou seja o item e menor doq a raiz
         if(raizArvore.getItem()>item){
+            valor=raizArvore.getItem();
             return obterSuc(valor,raizArvore.getEsquerda(),item);
         }
         //Busca Binaria pela direita,ou seja o item e maior doq a raiz
@@ -606,7 +602,6 @@ public class ABB<E extends Comparable<E>> {
             //Caso 2 → nó NÃO TEM sub-árvore esquerda
             //  antecessor = ancestral mais próximo pelo qual
             //               você desceu pela direita
-            valor=raizArvore.getItem();
             return obterSuc(valor,raizArvore.getDireita(),item);
         }
         //Achamos o item então aplicamos o sucessor nele
@@ -974,6 +969,103 @@ public class ABB<E extends Comparable<E>> {
         }
         removerFolhasAUX(raiz.getEsquerda());
         removerFolhasAUX(raiz.getDireita());
+    }
+    //Uma árvore é cheia quando todo nó tem 0 ou 2 filhos — nunca apenas 1.
+    //Cheia ✅             Não cheia ❌
+    //        10                10
+    //       /  \              /  \
+    //      5    15           5    15
+    //     / \                /
+    //    3   8              3
+        public boolean ehCheia(){
+            return ehCheiaAUX(this.raiz);
+        }
+        public boolean ehCheiaAUX(No<E> raiz){
+            if(raiz==null)
+                //chegou no final da arvore sem cair nos ifs
+                return true;
+            if(raiz.getEsquerda()==null && raiz.getDireita()!= null){
+                //1 filho a diretia
+                return false;
+            }
+            if(raiz.getEsquerda()!=null && raiz.getDireita()==null){
+                //1 filho a esq
+                return false;
+            }
+            return ehCheiaAUX(raiz.getEsquerda()) && ehCheiaAUX(raiz.getDireita());
+        }
+    public int obterQuantidadeNosInternos(){
+        return obterQuantidadeNosInternosAUX(this.raiz);
+    }
+    public int obterQuantidadeNosInternosAUX(No<E> raiz){
+        if(raiz==null)
+            return 0;
+        if(raiz.getEsquerda()==null &&  raiz.getDireita()== null){
+            return 0;
+        }
+        return 1+obterQuantidadeNosInternosAUX(raiz.getDireita()) + obterQuantidadeNosInternosAUX(raiz.getEsquerda());
+    }
+    public boolean ehBalanceada(){
+        return ehBalanceadaAUX(this.raiz);
+    }
+    public boolean ehBalanceadaAUX(No<E> raiz){
+        if(raiz == null)
+            return true;
+
+        // calcula altura da esquerda e direita aqui mesmo
+        int altEsq = ehBalanceadaALTURAAUX(raiz.getEsquerda());
+        int altDir = ehBalanceadaALTURAAUX(raiz.getDireita());
+
+        // verifica se a diferença é maior que 1
+        if(Math.abs(altEsq - altDir) > 1)
+            return false;
+
+        // verifica os filhos também
+        return ehBalanceadaAUX(raiz.getEsquerda()) &&
+                ehBalanceadaAUX(raiz.getDireita());
+    }
+    public int ehBalanceadaALTURAAUX(No<E> raiz){
+        if(raiz==null)
+            return -1; //altura de no vazio ==-1;
+        return 1 + Math.max(ehBalanceadaALTURAAUX(raiz.getEsquerda()), ehBalanceadaALTURAAUX(raiz.getDireita()));
+
+    }
+    public int obterQuantidadeNosInternosAUX(){
+        return obterQuantidadeNosComDoisFilhos(this.raiz);
+    }
+    public int obterQuantidadeNosComDoisFilhos(No <E> raiz){
+        if(raiz==null)
+            return 0;
+        if(raiz.getEsquerda()!=null && raiz.getDireita()!=null){
+            return 1+ obterQuantidadeNosComDoisFilhos(raiz.getDireita()) + obterQuantidadeNosComDoisFilhos(raiz.getEsquerda());
+        }
+        return obterQuantidadeNosComDoisFilhos(raiz.getEsquerda()) + obterQuantidadeNosComDoisFilhos(raiz.getDireita());
+    }
+    public boolean contemItem(E item){
+        if(item==null)
+            return false;
+        return contemItemAUX(item,this.raiz);
+    }
+    public boolean contemItemAUX(E item, No<E> raiz){
+        if(raiz==null)
+            return false;
+        if(raiz.getItem().equals(item)){
+            return true;
+        }
+        //Exato! || — se encontrar em qualquer um dos lados retorna true:
+        return contemItemAUX(item, raiz.getDireita()) || contemItemAUX(item, raiz.getEsquerda());
+
+    }
+    //Implemente o método public void espelhar(), capaz de espelhar a árvore binária de busca,
+    //ou seja, trocar todos os filhos esquerdos pelos direitos e vice-versa.
+    //Antes:              Depois:
+    //        10                  10
+    //       /  \                /  \
+    //      5    15            15    5
+    //     / \                      / \
+    //    3   8                    8   3
+    public void espelhar(){
+
     }
 
 
