@@ -395,7 +395,34 @@ else if (raiz.getDireita() != null && raiz.getEsquerda() == null) {
     raiz.setItem(filho.getItem());
     raiz.setDireita(null);
 }
+```
+### 🔄 Remoção - Caso 3: Nó com 2 filhos
 
+Esta é a etapa mais complexa da remoção em uma Árvore Binária de Busca (ABB). Quando um nó possui ambos os filhos válidos (esquerda e direita), não podemos simplesmente excluí-lo ou alterar os ponteiros diretos, pois isso fragmentaria a árvore.
+
+#### 📝 Lógica de Substituição
+Para resolver esse caso, aplicamos a estratégia de **substituição de valor**:
+1. Encontramos o **antecessor direto** do nó (o maior elemento contido na sua subárvore esquerda).
+2. Substituímos o item do nó que queremos remover pelo item desse elemento encontrado,ou seja substtuimos ele pelo antecessor.
+3. Descemos recursivamente na subárvore para remover o nó que foi copiado (que agora se tornou uma folha ou possui apenas 1 filho, caindo nos casos 1 ou 2).
+4. O no antecessor sempre tera no maximo um filho á esquerda ai seria como se a gente usasse o remover com um nó,ja visto.
+
+---
+
+#### 💻 Implementação do Trecho de Código
+
+```java
+// Caso o nó possua dois filhos válidos
+if (raiz.getEsquerda() != null && raiz.getDireita() != null) {
+    // 1. Encontra o antecessor (maior elemento do lado esquerdo)
+    No<E> antecessor = encontrarMaiorEsquerda(raiz.getEsquerda());
+    
+    // 2. Copia o valor do antecessor para o nó atual
+    raiz.setItem(antecessor.getItem());
+    
+    // 3. Remove o antecessor original que ficou duplicado na subárvore esquerda
+    raiz.setEsquerda(removerAUX(antecessor.getItem(), raiz.getEsquerda()));
+}
 
 
 
