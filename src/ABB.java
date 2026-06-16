@@ -855,34 +855,31 @@ public class ABB<E extends Comparable<E>> {
     public boolean ehCompleta(){
         if(vazia())
             return false;
-        boolean statusfilho=false;
-        boolean statusnivel=false;
-        statusfilho=ehCompletaAUXFILHO(this.raiz);
-        statusnivel=ehCompletaAUXNIVEL(this.raiz);
-        return(statusfilho && statusNivel);
-
+        boolean statusfilho = ehCompletaAUXFILHO(this.raiz);
+        boolean statusnivel = ehCompletaAUXNIVEL(this.raiz, 0, obterAltura());
+        return statusfilho && statusnivel;
     }
+
     public boolean ehCompletaAUXFILHO(No<E> raiz){
-        if(raiz==null)
+        if(raiz == null)
             return true;
-        if(raiz.getEsquerda()==null && raiz.getDireita()!=null){
+        if(raiz.getEsquerda() == null && raiz.getDireita() != null)
             return false;
-        }
-        if(raiz.getEsquerda()!=null && raiz.getDireita()==null){
+        if(raiz.getEsquerda() != null && raiz.getDireita() == null)
             return false;
-        }
-        if(raiz.getEsquerda()==null && raiz.getDireita()==null){
-            return
-
-        }
-        return ehCompletaAUXFILHO(raiz.getEsquerda()) && ehCompletaAUXFILHO(raiz.getDireita());
-
+        if(raiz.getEsquerda() == null && raiz.getDireita() == null)
+            return true;
+        return ehCompletaAUXFILHO(raiz.getEsquerda()) &&
+                ehCompletaAUXFILHO(raiz.getDireita());
     }
-    public boolean ehCompletaAUXNIVEL(No<E> raiz){
-        if(raiz.getEsquerda() == null && raiz.getDireita() == null){
-            if()
-        }
 
+    public boolean ehCompletaAUXNIVEL(No<E> raiz, int nivelAtual, int altura){
+        if(raiz == null)
+            return true;
+        if(raiz.getEsquerda() == null && raiz.getDireita() == null)
+            return nivelAtual == altura;
+        return ehCompletaAUXNIVEL(raiz.getEsquerda(), nivelAtual + 1, altura) &&
+                ehCompletaAUXNIVEL(raiz.getDireita(),  nivelAtual + 1, altura);
     }
     public int contarFolhas(No<E> raiz){
         if(raiz==null)
@@ -978,5 +975,6 @@ public class ABB<E extends Comparable<E>> {
         removerFolhasAUX(raiz.getEsquerda());
         removerFolhasAUX(raiz.getDireita());
     }
+
 
 }
