@@ -1065,8 +1065,103 @@ public class ABB<E extends Comparable<E>> {
     //     / \                      / \
     //    3   8                    8   3
     public void espelhar(){
-
+        espelharAUX(this.raiz);
     }
+    public void espelharAUX(No <E> raiz){
+        if(raiz==null)
+            return;
+        // 1. Variável auxiliar guarda o nó da esquerda antes dele ser sobrescrito
+        No<E> temp = raiz.getEsquerda();
+
+        raiz.setEsquerda(raiz.getDireita());
+        raiz.setDireita(temp);
+
+        // 3. Continua a recursão para os níveis de baixo
+        // Nota: como os lados mudaram, a nova esquerda era a antiga direita, mas a recursão vai passar por todos!
+        espelharAUX(raiz.getEsquerda());
+        espelharAUX(raiz.getDireita());
+    }
+    public int contarNosUmFilho(){
+        contarNosUmFilhoAUX(this.raiz);
+    }
+    public int contarNosUmFilhoAUX(No<E> raiz){
+        if(raiz==null)
+            return 0;
+        if(raiz.getEsquerda()==null && raiz.getDireita()!=null){
+            return 1+contarNosUmFilhoAUX(raiz.getDireita()) + contarNosUmFilhoAUX(raiz.getEsquerda());
+        }
+        if(raiz.getEsquerda()!=null && raiz.getDireita()==null){
+            return 1+contarNosUmFilhoAUX(raiz.getDireita()) + contarNosUmFilhoAUX(raiz.getEsquerda());
+        }
+        return contarNosUmFilhoAUX(raiz.getEsquerda()) +contarNosUmFilhoAUX(raiz.getDireita());
+    }
+    public int contarNosPares(){
+        return contarNosParesAUX(this.raiz);
+    }
+    public int contarNosParesAUX(No<E> raiz){
+        if(raiz==null)
+            return 0;
+        if((Integer) raiz.getItem() % 2 == 0){
+            return 1+contarNosParesAUX(raiz.getDireita())+contarNosParesAUX(raiz.getEsquerda());
+        }
+        return contarNosParesAUX(raiz.getDireita())+contarNosParesAUX(raiz.getEsquerda());
+    }
+    public int contarMaioresQue(E valor){
+        if(valor==null)
+            return 0;
+        return contarMaioresQueAUX(this.raiz,valor);
+    }
+    public int contarMaioresQueAUX(No<E> raiz, E valor){
+        if(raiz==null)
+            return 0;
+        if(raiz.getItem()>valor){
+            return 1+contarMaioresQueAUX(raiz.getDireita(),valor)+ contarMaioresQueAUX(raiz.getEsquerda(),valor);
+        }
+        return contarMaioresQueAUX(raiz.getEsquerda(),valor)+contarMaioresQue(raiz.getDireita(),valor);
+    }
+    public int contarMenoresQue(E valor){
+        if(valor==null)
+            return 0;
+        return contarMenoresQueAUX(this.raiz,valor);
+    }
+    public int contarMenoresQueAUX(No<E> raiz, E valor){
+        if(raiz==null)
+            return 0;
+        if(raiz.getItem()<valor){
+            return 1+contarMenoresQueAUX(raiz.getEsquerda(),valor)+contarMenoresQueAUX(raiz.getDireita(),valor);
+        }
+        //nos poderiamos  diexar com um custo menor essa recursao ja que a chamada pra direita sempre vai cair no 0;
+        //pelo lado direito ser maior;
+        return contarMenoresQueAUX(raiz.getEsquerda(),valor)+contarMenoresQueAUX(raiz.getDireita(),valor);
+    }
+    public void deletarFolhas() {
+        // A raiz principal recebe o resultado da limpeza
+        this.raiz = deletarFolhasAUX(this.raiz);
+    }
+
+    private No<E> deletarFolhasAUX(No<E> raiz) {
+        // Caso Base 1: Se for nulo, apenas retorna nulo
+        if (raiz == null) {
+            return null;
+        }
+
+        // Caso Base 2: Se o nó ATUAL for uma folha...
+        if (raiz.getEsquerda() == null && raiz.getDireita() == null) {
+            // Para deletar ele, retornamos null para o pai dele receber esse null!
+            return null;
+        }
+
+        // Passo Recursivo: O nó atual (pai) atualiza seus filhos com o resultado da recursão
+        raiz.setEsquerda(deletarFolhasAUX(raiz.getEsquerda()));
+        raiz.setDireita(deletarFolhasAUX(raiz.getDireita()));
+
+        // No final, retorna o próprio nó atual (que não foi deletado) para manter a árvore conectada
+        return raiz;
+    }
+
+
+
+
 
 
 }
