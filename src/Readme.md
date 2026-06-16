@@ -423,8 +423,48 @@ if (raiz.getEsquerda() != null && raiz.getDireita() != null) {
     // 3. Remove o antecessor original que ficou duplicado na subárvore esquerda
     raiz.setEsquerda(removerAUX(antecessor.getItem(), raiz.getEsquerda()));
 }
+```
+### Balanceamento
+Se nos formos adicionar elementos em ordem crescente ou descrencente em uma arvore caimos no pior caso toda hora e ai teremos uma estrutura parecida com a de um vetor simples,então a ABB sempre vai cair no seu pior caso .
 
+É para garatir que isso não aconteça vamos dar inicio ao balanceamento,,
 
+Vamos minimizar o tempo medio de pesquisa,para isso vamos balancear a arvore usando com base a ALTURA da arvore
+
+-Para cada um do seus nós as alturas de suas subarvores esquerda e da direita diferem em no maximo uma unidade
+
+-Fator de balanceamento=Altura do nó da esquerda - Altura do nó da direita;Nos vazios terão altura = -1 ;
+
+-Verificamos o balanceamento em cada exclusão e adição de nós na arvore 
+
+-Se o fator de balanceamento for -1 quer dizer que a arvore tem mais filho á direita se o fator de balanceamento for 1 quer dizer que a arvore tem mais filho á esquerda;
+
+-Então para saber se uma arvore esta balanceada ou n o FATOR DE BALANCEMANTO de todos os seus nós deve ter valores de [-1,0,1],qualquer valor de um FATOR DE BALANCEMANETO diferente desse significa que a arvore esta desbalanceada e nos precisamos fazer algumas alterações para balancear ela
+
+### ⚖️ Tabela de Diretrizes de Balanceamento (Árvore AVL)
+
+Quando a diferença de altura entre a subárvore esquerda e direita de um nó resulta em um **Fator de Balanceamento (FB) igual a -2 ou 2**, o nó está desbalanceado. Para corrigir isso, olhamos o **FB do seu filho** para decidir qual rotação aplicar.
+
+> 📌 **Nota:** A fórmula utilizada para o cálculo do Fator de Balanceamento neste projeto é:  
+> `FB = altura(subárvore_esquerda) - altura(subárvore_direita)`
+
+| FB do Nó Desbalanceado | Filho a Analisar | FB do Filho | Caso Clássico | Ação / Rotação Necessária |
+| :---: | :---: | :---: | :---: | :--- |
+| **+2** (Pende para Esq.) | Esquerdo | **+1** ou **0** | Esquerda-Esquerda (EE) | **Rotação Simples à Direita** |
+| **+2** (Pende para Esq.) | Esquerdo | **-1** | Esquerda-Direita (ED) | **Rotação Dupla à Direita** *(Esq. dps Dir.)* |
+| **-2** (Pende para Dir.) | Direito | **-1** ou **0** | Direita-Direita (DD) | **Rotação Simples à Esquerda** |
+| **-2** (Pende para Dir.) | Direito | **+1** | Direita-Esquerda (DE) | **Rotação Dupla à Esquerda** *(Dir. dps Esq.)* |
+
+---
+
+#### 💡 Resumo Visual Prático para os `if/else` do Código:
+
+* **Sinais Iguais = Rotação Simples:** Se o nó está positivo (+2) e o filho também está positivo/neutro (+1 ou 0), ou se ambos estão negativos, resolve-se com apenas uma rotação na direção oposta.
+* **Sinais Inversos = Rotação Dupla:** Se o nó está positivo (+2) e o filho está negativo (-1), os sinais cruzados "entortam" a árvore (formando um joelho ou zigue-zague). É necessário rotacionar o filho primeiro para alinhar os sinais e depois rotacionar o pai.
+
+![Foto slide prof aeds 2,tabela de balancenamento](Captura%20de%20tela%202026-06-15%20225501.png)
+
+Sinal TROCADO=Rotação dupla;
 
 
 
