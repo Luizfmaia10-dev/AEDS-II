@@ -62,7 +62,7 @@ public class No<T extends Comparable<T>> {
         return this.altura;
     }
     /// PODEMOS FAZER O SETALTURA ASSIM TBM===============================================
-    //public void setAltura() {
+    public void setAltura() {
     //
     //		int alturaEsquerda, alturaDireita;
     //

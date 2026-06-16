@@ -1158,6 +1158,69 @@ public class ABB<E extends Comparable<E>> {
         // No final, retorna o próprio nó atual (que não foi deletado) para manter a árvore conectada
         return raiz;
     }
+    public boolean ehABB(){
+        return ehABBAUX(this.raiz,Integer.MIN_VALUE,Integer.MAX_VALUE);
+    }
+    public boolean ehABBAUX(No<E> raiz, int min, int max){
+        if (raiz == null) {
+            return true;
+        }
+        int valorAtual = (Integer) raiz.getItem();
+        //e o valor atual for menor ou igual ao mínimo permitido,
+        //ou se for maior ou igual ao máximo permitido, a árvore está INVÁLIDA!
+        if (valorAtual <= min || valorAtual >= max) {
+            return false;
+        }
+        // - Para a esquerda: o mínimo continua o mesmo, mas o máximo vira o 'valorAtual'
+        // - Para a direita: o mínimo vira o 'valorAtual', e o máximo continua o mesmo
+        return ehABBAUX(raiz.getEsquerda(), min, valorAtual) && ehABBAUX(raiz.getDireita(), valorAtual, max);
+    }
+    public boolean ehSimetrica(){
+        if(vazia())
+             return true;//arvore vazia é simetrica
+        return(ehSimetricaAUX(this.raiz.getEsquerda(),this.raiz.getDireita()));
+    }
+    public boolean ehSimetricaAUX(No<E> raizesq,No<E> raizdir){
+        if (raizesq == null && raizdir == null) {
+            return true;
+        }
+        if(raizesq==null || raizdir==null)
+            return false;
+        if (raizesq.getItem() != raizdir.getItem()) {
+            return false;
+        }
+        ehSimetricaAUX(raizesq.getEsquerda(),raizdir.getDireita()) && ehSimetricaAUX(raizesq.getDireita(),raizdir.getEsquerda());
+    }
+    public int ssomarFolhas(){
+        return ssomarFolhasAUX(this.raiz);
+    }
+    public int ssomarFolhasAUX(No<E> raiz){
+        if(raiz==null){
+            return 0;
+        }
+        if(raiz.getDireita()==null && raiz.getEsquerda()==null){
+            return raiz.getItem();
+        }
+        return ssomarFolhasAUX(raiz.getEsquerda())+ ssomarFolhasAUX(raiz.getDireita());
+    }
+    public int contarGrauUm(){
+        return contarGrauUmAUX(this.raiz);
+    }
+    public int contarGrauUmAUX(No<E> raiz){
+        if(raiz==null){
+            return 0;
+        }
+        if(raiz.getDireita()!=null && raiz.getEsquerda()==null){
+            return 1+contarGrauUmAUX(raiz.getDireita())+contarGrauUmAUX(raiz.getEsquerda());
+        }
+        if(raiz.getEsquerda()!=null && raiz.getDireita()==null){
+            return 1+contarGrauUmAUX(raiz.getDireita())+contarGrauUmAUX(raiz.getEsquerda());
+        }
+        return contarGrauUmAUX(raiz.getEsquerda())+contarGrauUmAUX(raiz.getDireita());
+    }
+
+
+
 
 
 
