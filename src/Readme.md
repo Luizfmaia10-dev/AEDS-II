@@ -361,6 +361,40 @@ return; // Caso base: chegou ao fim do caminho e não achou
 }
 
 Agora Vamos para o caso 2 
+No caso 2 nos temos que excluir um no com 1 filho
+
+primeiramente nos verificamnos se o no que queremos remover realmente tem um filho
+
+mas nos fazemos essa verificação tanto para filho da direita quanto para filho da esquerda
+
+É como se o avo adotasse o neto
+
+### 🔄 Remoção - Caso 2: Nó com apenas 1 filho
+
+Nesta etapa, realizamos a verificação para identificar se o nó possui exatamente um filho (seja na direita ou na esquerda). O comportamento lógico dessa remoção funciona como se o **avô adotasse o neto**, mantendo a estrutura da árvore conectada de forma contínua.
+
+#### 📝 Lógica de Verificação
+* **Apenas filho à esquerda:** Se a direita for nula e a esquerda possuir um nó válido.
+* **Apenas filho à direita:** Se a direita possuir um nó válido e a esquerda for nula.
+
+---
+
+#### 💻 Implementação do Trecho de Código
+
+```java
+// Primeiro, verificamos se o nó realmente tem apenas um filho
+if (raiz.getDireita() == null && raiz.getEsquerda() != null) {
+    // Nesse caso, ele só tem filho à esquerda
+    filho = raiz.getEsquerda();
+    raiz.setItem(filho.getItem());
+    raiz.setEsquerda(null);
+} 
+else if (raiz.getDireita() != null && raiz.getEsquerda() == null) {
+    // Nesse caso, ele só tem filho à direita
+    filho = raiz.getDireita();
+    raiz.setItem(filho.getItem());
+    raiz.setDireita(null);
+}
 
 
 
