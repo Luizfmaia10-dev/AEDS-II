@@ -1257,6 +1257,32 @@ public class ABB<E extends Comparable<E>> {
         obterSubconjuntoMenoresAUX(subconjMenores,raiz.getDireita(),item);
         return subconjMenores;
     }
+    public int contarNosParesContrario(){
+        contarNosParesContrarioAUX(this.raiz);
+    }
+    public int contarNosParesContrarioAUX(No<E> raiz){
+        if(raiz==null){
+            return 1;
+        }
+        if((raiz.getItem()%2) != 0){
+            return 0;
+        }
+        return contarNosParesContrarioAUX(raiz.getEsquerda()) + contarNosParesContrarioAUX(raiz.getDireita());
+    }
+    public int contarNosImpares(){
+        return contarNosImparesAUX(this.raiz);
+    }
+    public int contarNosImparesAUX(No<E> raiz){
+        if(raiz==null){
+            return 0;
+        }
+        //verificação de impar
+        if((raiz.getItem()%2)!=0){
+            return 1;
+        }
+        return contarNosImparesAUX(raiz.getEsquerda()) + contarNosImparesAUX(raiz.getDireita());
+
+    }
 
 
 }
