@@ -1289,9 +1289,21 @@ public class ABB<E extends Comparable<E>> {
         return imprimirAncestraisAUX(this.raiz, valor);
     }
     public boolean imprimirAncestraisAUX(No<E> raiz, E valor) {
+        if(raiz == null)
+            return false;
 
+        if(raiz.getItem().equals(valor))
+            return true;
 
+        // se o valor estiver na esquerda OU na direita...
+        // imprime o nó atual e retorna true!
+        //recursão ja e feita dentro do if
+        if(imprimirAncestraisAUX(raiz.getEsquerda(), valor) || imprimirAncestraisAUX(raiz.getDireita(), valor))  {
+            System.out.println(raiz.getItem());
+            return true;
+        }
 
+        return false;
     }
 
 
