@@ -145,6 +145,7 @@ if(raizArvore!=null){
 
 Para saber melhor esse CaminhamentoPreOrdem fiz um MACETE:primeiro emprimimos a raiz da arvore,depois todos os elementos a sua esquerda,e como se vc desse um getesquerda e ja printasse,e depois nesse mesma subarvore da esquerda quando acabar de imprimir toda a esquerda imprima os elementos da direita da subarvore da esquerda subindo,depois disso vamos para a subarvore da direita,nela vamos imprimir,todos os ekekmntos da esquerda dessa subarvore a direita da nossa raiz principal e depois imprimimos os da direta subindo
 
+So que se caimos em uma subarvore,ao deslocar tanto pra direita quanto para esquerda nos repetimos o macete
 
 EX:Uma arvore 10,5,15,3,8,13,16,2,4
 

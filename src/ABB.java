@@ -1281,8 +1281,19 @@ public class ABB<E extends Comparable<E>> {
             return 1;
         }
         return contarNosImparesAUX(raiz.getEsquerda()) + contarNosImparesAUX(raiz.getDireita());
+    }
+    public boolean imprimirAncestrais(E valor) {
+        if (valor == null || vazia()) {
+            return false;
+        }
+        return imprimirAncestraisAUX(this.raiz, valor);
+    }
+    public boolean imprimirAncestraisAUX(No<E> raiz, E valor) {
+
+
 
     }
+
 
 
 }
