@@ -1305,6 +1305,47 @@ public class ABB<E extends Comparable<E>> {
 
         return false;
     }
+    public int obterQuantidadeDeNosNivel(int nivel){
+        return obterQuantidadeDeNosNiveilAUX(this.raiz,nivel);
+    }
+    public int obterQuantidadeDeNosNiveilAUX(No<E> raiz, int nivel){
+        if(raiz==null){
+            return 0;
+        }
+
+
+    }
+    /// QUESTOES DA PROVA ENTIGA--------------------------------------------------------------------------------------
+    public boolean verificarEstrita(){
+        return verificarEstritaAUX(this.raiz);
+    }
+    public boolean verificarEstritaAUX(No<E> raiz){
+        if(raiz==null){
+            return true;
+        }
+        if(raiz.getEsquerda()!= null && raiz.getDireita()== null){
+            return false;
+        }
+        if(raiz.getEsquerda()== null && raiz.getDireita()!= null){
+            return false;
+        }
+        //&& → TODOS precisam ser true para o resultado ser true
+        //|| → BASTA UM ser true para o resultado ser true
+        return verificarEstritaAUX(raiz.getEsquerda())  && verificarEstritaAUX(raiz.getDireita());
+    }
+    public int obterNumFolhaa(){
+        return obterNumFolhaaAUX(this.raiz);
+    }
+    public int obterNumFolhaaAUX(No<E> raiz){
+        if(raiz==null){
+            return 0;
+        }
+        if(raiz.getEsquerda()== null && raiz.getDireita() == null){
+            return 1;
+        }
+        return obterNumFolhaaAUX(raiz.getEsquerda())+ obterNumFolhaaAUX(raiz.getDireita());
+    }
+    /// ----------------------------------------------------------------------------------------------------------------
 
 
 
