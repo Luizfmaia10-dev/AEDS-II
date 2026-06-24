@@ -408,6 +408,7 @@ public class ABB<E extends Comparable<E>> {
         clonar(this.raiz,clone);
         return clone;
     }
+    //fazemos o clone igual fazeriamos o caminhamento preordem
     public void clonar(No <E> raizArvore, ABB<E> clone){
         if (raizArvore == null) {
             return;
@@ -1345,7 +1346,7 @@ public class ABB<E extends Comparable<E>> {
         }
         return obterNumFolhaaAUX(raiz.getEsquerda())+ obterNumFolhaaAUX(raiz.getDireita());
     }
-    /// ----------------------------------------------------------------------------------------------------------------
+    ///----------------------------------------------------------------------------------------------------------------
 
 
 
