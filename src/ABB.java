@@ -1128,7 +1128,7 @@ public class ABB<E extends Comparable<E>> {
     public int contarMenoresQueAUX(No<E> raiz, E valor){
         if(raiz==null)
             return 0;
-        if(raiz.getItem()<valor){
+        if(raiz.getItem() < valor){
             return 1+contarMenoresQueAUX(raiz.getEsquerda(),valor)+contarMenoresQueAUX(raiz.getDireita(),valor);
         }
         //nos poderiamos  diexar com um custo menor essa recursao ja que a chamada pra direita sempre vai cair no 0;
@@ -1347,6 +1347,31 @@ public class ABB<E extends Comparable<E>> {
         return obterNumFolhaaAUX(raiz.getEsquerda())+ obterNumFolhaaAUX(raiz.getDireita());
     }
     ///----------------------------------------------------------------------------------------------------------------
+    /// QUESTÃO ATIVIDADE
+    public boolean ehAVL(){
+        return ehAVLAUX(this.raiz);
+    }
+    public boolean ehAVLAUX(No<E> raiz){
+        if(raiz==null){
+            return true;
+        }
+        if(raiz.getFatorbalanceamento()>1 && raiz.getFatorbalanceamento()<-1){
+            return false;
+        }
+        return (ehAVLAUX(raiz.getEsquerda()) && ehAVLAUX(raiz.getDireita()));
+    }
+    /// ========================================================================
+
+    //esse funcção teria que ser denrto da classe NO
+    public int getFatorBalanceamento(){
+        return getFatorbalanceamentoAUX(this.raiz);
+    }
+    public int getFatorbalanceamentoAUX(No<E> raiz){
+        if(raiz==null){
+            return 0;
+        }
+        return raiz.getEsquerda().getAltura() - raiz.getDireita().getAltura();
+    }
 
 
 
