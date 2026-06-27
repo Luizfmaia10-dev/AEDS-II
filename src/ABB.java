@@ -1372,6 +1372,46 @@ public class ABB<E extends Comparable<E>> {
         }
         return raiz.getEsquerda().getAltura() - raiz.getDireita().getAltura();
     }
+    public No<E> clonarNO(No<E> raiz) {
+        if(raiz==null){
+            return null;
+        }
+        return clonarAUX(raiz);
+    }
+    public No<E> clonarAUX(No<E> raizAtual) {
+        No<E> novoNo = new No<>(raizAtual.getItem());
+        novoNo.setEsquerda(clonarAUX(raizAtual.getEsquerda()));
+        novoNo.setDireita(clonarAUX(raizAtual.getDireita()));
+        return novoNo;
+    }
+    public boolean saoIguais(No<E> raizA, No<E> raizB) {
+        if(raizA==null && raizB==null){
+            return true;
+        }
+        if (raizA == null || raizB == null) {
+            return false;
+        }
+        if(raizA.getItem().equals(raizB.getItem())){
+            return true;
+        }
+        return saoIguais(raizA.getEsquerda(), raizB.getEsquerda()) && saoIguais(raizA.getDireita(), raizB.getDireita());
+    }
+    public ABB<E> cloneDNV(){
+        ABB<E> clone = new ABB<>();
+        if(this.raiz==null){
+            return clone;
+        }
+        return cloneAUX(this.raiz,clone);
+    }
+    public ABB<E> cloneAUX(No <E> raiz, ABB<E> clone){
+        if(raiz==null){
+            return clone;
+        }
+        clone.adicionar(raiz.getItem());
+        cloneAUX(raiz.getEsquerda(), clone);
+        cloneAUX(raiz.getDireita(), clone);
+        return clone;
+    }
 
 
 
