@@ -1569,6 +1569,80 @@
             }
             return contarFolhasParesAUX(raiz.getDireita())+contarFolhasParesAUX(raiz.getEsquerda());
         }
+        //Enunciado: Implementa o método public int contarParesNaDireita(E valor) na tua classe ABB. Este método deve:
+        //
+        //Procurar pelo nó que contém o valor passado como argumento (utilizando a propriedade de busca da ABB).
+        //
+        //Se encontrar esse nó, o método deve contar quantos números PARES existem na subárvore DIREITA desse nó.
+        //
+        //Se o valor não existir na árvore, ou se o nó encontrado não tiver subárvore direita, o método deve retornar 0.
+        public int contarParesNaDireita(E valor){
+            if(this.raiz==null){
+                return 0;
+            }
+            return contarParesNaDireitaAUXX(this.raiz,valor);
+        }
+        public int contarParesNaDireitaAUXX(,No <E> raiz,E valor){
+            if (raiz == null) {
+                return 0;
+            }
+            if(valor>raiz.getItem()){
+                return contarParesNaDireitaAUXX(raiz.getDireita(),valor);
+            }
+            if(valor<raiz.getItem()){
+                return contarParesNaDireitaAUXX(raiz.getEsquerda(),valor);
+            }
+            if(valor==raiz.getItem()){
+                return contarParesNaDireitaAUX(this.raiz,valor);
+            }
+        }
+        public int contarParesNaDireitaAUX(No<E> raiz,E valor){
+            if(raiz==null){
+                return 0;
+            }
+            if(raiz.getItem()%2==0){
+                return 1+ contarParesNaDireitaAUX(raiz.getDireita(),valor)+ contarParesNaDireitaAUX(raiz.getEsquerda(),valor);
+            }
+            return contarParesNaDireitaAUX(raiz.getDireita(),valor)+ contarParesNaDireitaAUX(raiz.getEsquerda(),valor);
+        }
+        public int somarMaioresQue(int x){
+            if(this.raiz==null){
+                return 0;
+            }
+            return somarMaioresQueAUX(this.raiz,x);
+        }
+        private int somarMaioresQueAUX(No<E> raiz, int x){
+            if(raiz==null){
+                return 0;
+            }
+            if(raiz.getItem()>x){
+                return raiz.getItem()+somarMaioresQueAUX(raiz.getEsquerda(),x)+somarMaioresQueAUX(raiz.getDireita(),x);
+            }
+            return somarMaioresQueAUX(raiz.getEsquerda(),x)+somarMaioresQueAUX(raiz.getDireita(),x);
+        }
+        //Poderiamos ter feito dessa forma tambem
+        //// 3. PODA INTELIGENTE: Se o item atual for menor ou igual a x:
+        //    // Ignoramos completamente a esquerda e mandamos procurar APENAS na direita!
+        //    return somarMaioresQueAUX(raiz.getDireita(), x);
+        //Poderiamos ter feito dessa forma tambem
+        public int somarMenoresQue(int x){
+            if(this.raiz==null){
+                return 0;
+            }
+            return somarMenoresQueAUX(this.raiz,x);
+        }
+        private int somarMenoresQueAUX(No<E> raiz, int x){
+            if(raiz==null){
+                return 0;
+            }
+            if(raiz.getItem()<x){
+                return raiz.getItem()+somarMenoresQueAUX(raiz.getDireita(),x)+somarMenoresQueAUX(raiz.getEsquerda(),x);
+            }
+            return somarMenoresQueAUX(raiz.getDireita(),x)+somarMenoresQueAUX(raiz.getEsquerda(),x);
+        }
+
+
+
     
 
     
