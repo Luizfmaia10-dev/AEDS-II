@@ -1506,6 +1506,7 @@ private boolean verificarEstrutura(No<E> no, E valorMinimo, E valorMaximo) {
     //que devolve a soma de todos os elementos x tais que a <= x <= b. Use a propriedade de
     //ABB para evitar percorrer ramos desnecessários. Analise a complexidade no pior caso e em
     //um caso médio com árvore balanceada.
+
     public int somaIntervalo(int a, int b){
         if(raiz==null){
             return 0;
@@ -1517,10 +1518,19 @@ private boolean verificarEstrutura(No<E> no, E valorMinimo, E valorMaximo) {
             return 0;
         }
         //estou garatindo que o elemnto esta entre a e b
-        if(a<raiz.getItem() && b>raiz.getItem()){
+        if(a<=raiz.getItem() && b=>raiz.getItem()){
             return raiz.getItem()+somaIntervaloAUX(raiz.getEsquerda(),a,b) + somaIntervaloAUX(raiz.getDireita(),a,b);
         }
         return somaIntervaloAUX(raiz.getEsquerda(),a,b)+somaIntervaloAUX(raiz.getDireita(),a,b);
+    }
+    public int somaIntervaloAUX(No<E> raiz, int a, int b){
+        if(a>raiz.getItem()){
+            return 0 + somaIntervaloAUX(raiz.getEsquerda(),a,b)+somaIntervaloAUX(raiz.getDireita(),a,b);
+        }
+        if(b<raiz.getItem()){
+            return 0 + somaIntervaloAUX(raiz.getEsquerda(),a,b)+somaIntervaloAUX(raiz.getDireita(),a,b);
+        }
+        return raiz.getItem() + somaIntervaloAUX(raiz.getEsquerda(),a,b)+somaIntervaloAUX(raiz.getDireita(),a,b);
     }
 
 
