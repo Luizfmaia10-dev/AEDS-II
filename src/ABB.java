@@ -1446,6 +1446,84 @@ private boolean verificarEstrutura(No<E> no, E valorMinimo, E valorMaximo) {
     return verificarEstrutura(no.getEsquerda(), valorMinimo, no.getItem()) &&
            verificarEstrutura(no.getDireita(), no.getItem(), valorMaximo);
 }
+   public boolean isMax(double valor){
+        int numero=quantidadeDeNos(this.raiz);
+        int x=(int)valor*Math.log(numero) / Math.log(2);
+        if(this.raiz.getAltura()>x){
+            return false;
+        }
+        return true;
+    }
+//Considere duas instâncias de Arvore. Implemente boolean ehEspelho(Arvore outra) que
+//retorna true se a árvore atual e a árvore outra forem espelho uma da outra (para cada nó
+//na primeira há um nó correspondente na segunda em posição invertida esquerda/direita com
+//o mesmo valor). Analise a complexidade.
+    public boolean ehEspelho(ABB<E> outra) {
+        // Se a outra árvore for nula, elas só serão espelho se a nossa também for nula
+        if (outra == null) {
+            return this.raiz == null;
+        }
+        // Passamos o NÓ raiz de cada árvore para o auxiliar começar a caminhar
+        return ehEspelhoAUX(this.raiz, outra.raiz);
+    }
+    public boolean ehEspelhoAUX(No<E> noA, No<E> noB){
+        if(noA==null && noB==null){
+            return true;
+        }
+        if(noA==null || noB==null){
+            return false;
+        }
+        if (!noA.getItem().equals(noB.getItem())) {
+            return false;
+        }
+        return ehEspelhoAUX(noA.getDireita(),noB.getEsquerda()) && ehEspelhoAUX(noA.getEsquerda(),noB.getDireita());
+    }
+    //para fazer esse precisamos pegar o menor e maior elemento da abb
+    //o menor sempre vai ser o mais a esq
+    //o maior sempre o mais a direita
+    public int[] IntervaloABB(){
+        if(this.raiz==null){
+            return new int[0];
+        }
+        int[] resposta = new int[2];
+        resposta[0]=intervaloABBAUXESQ(this.raiz);
+        resposta[1]=intervaloABBAUXDIR(this.raiz);
+        return resposta;
+    }
+    private int intervaloABBAUXESQ(No<E> raiz){
+        if(raiz.getEsquerda()==null ){
+            return (int) raiz.getItem();
+        }
+        return intervaloABBAUXESQ(raiz.getEsquerda());
+    }
+    public int intervaloABBAUXDIR(No <E> raiz){
+        if(raiz.getDireita()==null){
+            return (int)raiz.getItem();
+        }
+        return intervaloABBAUXDIR(raiz.getDireita());
+    }
+    //Suponha que Arvore é uma ABB válida. Implemente int somaIntervalo(int a, int b)
+    //que devolve a soma de todos os elementos x tais que a <= x <= b. Use a propriedade de
+    //ABB para evitar percorrer ramos desnecessários. Analise a complexidade no pior caso e em
+    //um caso médio com árvore balanceada.
+    public int somaIntervalo(int a, int b){
+        if(raiz==null){
+            return 0;
+        }
+        return somaIntervaloAUX(this.raiz,int a,int b);
+    }
+    public int somaIntervaloAUX(No<E> raiz, int a, int b){
+        if(raiz==null){
+            return 0;
+        }
+        //estou garatindo que o elemnto esta entre a e b
+        if(a<raiz.getItem() && b>raiz.getItem()){
+            return raiz.getItem()+somaIntervaloAUX(raiz.getEsquerda(),a,b) + somaIntervaloAUX(raiz.getDireita(),a,b);
+        }
+        return somaIntervaloAUX(raiz.getEsquerda(),a,b)+somaIntervaloAUX(raiz.getDireita(),a,b);
+    }
+
+
 
 
 
