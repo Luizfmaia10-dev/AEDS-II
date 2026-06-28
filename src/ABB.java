@@ -1413,6 +1413,40 @@ public class ABB<E extends Comparable<E>> {
         return clone;
     }
 
+    public boolean isABBeAVL() {
+    return verificarEstrutura(this.raiz, null, null);
+}
+
+private boolean verificarEstrutura(No<E> no, E valorMinimo, E valorMaximo) {
+    // 1. Caso base: Uma árvore vazia é uma ABB e AVL válida
+    if (no == null) {
+        return true;
+    }
+
+    // ================= PARTE 1: VERIFICAÇÃO DE ABB =================
+    // Se o nó atual desrespeitar os limites de valor estabelecidos pelos pais, não é ABB
+    if ((valorMinimo != null && ((Comparable<E>) no.getItem()).compareTo(valorMinimo) <= 0) ||
+        (valorMaximo != null && ((Comparable<E>) no.getItem()).compareTo(valorMaximo) >= 0)) {
+        return false;
+    }
+
+    // ================= PARTE 2: VERIFICAÇÃO DE AVL =================
+    // Calcula as alturas das subárvores
+    int altEsq = (no.getEsquerda() != null) ? no.getEsquerda().getAltura() : 0;
+    int altDir = (no.getDireita() != null) ? no.getDireita().getAltura() : 0;
+
+    // Se o fator de balanceamento for desalinhado (menor que -1 ou maior que 1), não é AVL
+    if (Math.abs(altEsq - altDir) > 1) {
+        return false;
+    }
+
+    // ================= PARTE 3: RECURSÃO PARA OS FILHOS =================
+    // Para a esquerda, o valor máximo permitido passa a ser o valor do nó atual
+    // Para a direita, o valor mínimo permitido passa a ser o valor do nó atual
+    return verificarEstrutura(no.getEsquerda(), valorMinimo, no.getItem()) &&
+           verificarEstrutura(no.getDireita(), no.getItem(), valorMaximo);
+}
+
 
 
 }
