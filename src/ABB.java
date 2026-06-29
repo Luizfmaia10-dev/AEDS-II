@@ -1726,6 +1726,30 @@
             return resposta;
         }
 
+        // O método calcula de baixo para cima recursivamente
+         public int getAltura() {
+        // Se for um nó folha (não tem filhos), a altura dele é 0
+        if (this.esquerda == null && this.direita == null) {
+            return 0;
+        }
+
+        int altEsq = 0;
+        int altDir = 0;
+
+        // Se houver filho à esquerda, calcula a altura dele
+        if (this.esquerda != null) {
+            altEsq = this.esquerda.getAltura();
+        }
+
+        // Se houver filho à direita, calcula a altura dele
+        if (this.direita != null) {
+            altDir = this.direita.getAltura();
+        }
+
+        // A altura atual será 1 + a maior altura encontrada entre os dois lados
+        return 1 + Math.max(altEsq, altDir);
+    }
+
 
     
 }
