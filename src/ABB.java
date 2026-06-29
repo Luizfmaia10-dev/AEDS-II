@@ -1476,6 +1476,8 @@
             if (!noA.getItem().equals(noB.getItem())) {
                 return false;
             }
+            //a magia vem aqui onde passamos a referencia de forma contraria
+            //passamos o noA como dir e depois o noB como esq
             return ehEspelhoAUX(noA.getDireita(),noB.getEsquerda()) && ehEspelhoAUX(noA.getEsquerda(),noB.getDireita());
         }
         //para fazer esse precisamos pegar o menor e maior elemento da abb
@@ -1639,6 +1641,89 @@
                 return raiz.getItem()+somarMenoresQueAUX(raiz.getDireita(),x)+somarMenoresQueAUX(raiz.getEsquerda(),x);
             }
             return somarMenoresQueAUX(raiz.getDireita(),x)+somarMenoresQueAUX(raiz.getEsquerda(),x);
+        }
+        public int contNoFOOlha(){
+            return contNoFOOlhaAUX(this.raiz);
+        }
+        public int contNoFOOlhaAUX(No <E> raiz){
+            if(raiz==null){
+                return 0;
+            }
+            if(raiz.getEsquerda()==null && raiz.getDireita()==null){
+                return 1 + contNoFOOlhaAUX(raiz.getEsquerda()) + contNoFOOlhaAUX(raiz.getDierita());
+            }
+            return contNoFOOlhaAUX(raiz.getEsquerda()) + contNoFOOlhaAUX(raiz.getDierita());
+        }
+        public int contarNosBalanceados(){
+            contarNosBalanceadosAUX(this.raiz);
+        }
+        public int contarNosBalanceadosAUX(No <E> raiz){
+            if(raiz==null){
+                return 0;
+            }
+            if((raiz.getEsquerda().getAltrura()-(raiz.getDireita().getAltrura())>1 ||(raiz.getEsquerda().getAltrura()-(raiz.getDireita().getAltrura())<-1 ){
+                return 0+contarNosBalanceadosAUX(raiz.getEsquerda())+contarNosBalanceadosAUX(raiz.getDireita());
+            }
+            contarNosBalanceadosAUX(raiz.getEsquerda())+contarNosBalanceadosAUX(raiz.getDireita());
+        }
+        public int encontrarMaior() {
+          if (this.raiz == null) {
+            return -1;
+         }
+            return encontrarMaiorAUX(this.raiz);
+        }
+
+        private int encontrarMaiorAUX(No<E> raiz) {
+            if(raiz.getDireita()=null){
+                return raiz;
+            }
+            return encontrarMaiorAUX(raiz.getDireita());
+        }
+        public boolean estaAVLComAlturaMax(int h){
+            return estaAVLComAlturaMaxAUX(h,this.raiz);
+        }
+        public boolean estaAVLComAlturaMaxAUX(int h,No <E> raiz){
+            if(raiz == null){
+                return true
+            }
+            if(raiz.getAltura()>h){
+                return false;
+            }
+            return estaAVLComAlturaMaxAUX(h,raiz.getEsquerda()) && estaAVLComAlturaMaxAUX(h,raiz.getDireita());
+        }
+        boolean ehEstritamenteBinaria(){
+            if(raiz==null){
+                return false;
+            }
+            return ehEstritamenteBinariaAUX(this.raiz);
+        }
+        public boolean ehEstritamenteBinariaAUX(No <E> raiz){
+            if (raiz == null) {
+                return true;
+             }
+            if (raiz.getEsquerda() == null && raiz.getDireita() == null) {
+                return true;
+           }
+            if ((raiz.getEsquerda() != null && raiz.getDireita() == null) || (raiz.getEsquerda() == null && raiz.getDireita() != null)) {
+               return false; 
+            }
+            return ehEstritamenteBinariaAUX(raiz.getEsquerda()) && ehEstritamenteBinariaAUX(raiz.getDireita());
+        }
+        //Implemente o método String emOrdem() que retorna uma string com os elementos da árvore em ordem crescente (percurso em ordem: esquerda, raiz, direita), separados por espaço. 
+        //Não use estruturas auxiliares prontas, apenas recursão e concatenação. Analise a complexidade.
+        public String eemOrdem(){
+            // Criamos um construtor de string mutável
+            StringBuilder resposta = new StringBuilder();
+            return emOrdemAUX(this.raiz,resposta);
+        }
+        public String emOrdemAUX(No <E> raiz,StringBuilder resposta){
+            if (raiz == null) {
+                return; 
+            }
+            emOrdemAUX(raiz.getEsquerda(),String resposta);
+            resposta.append(raiz.getItem() + " ");
+            emOrdemAUX(raiz.getDireita(),String resposta);
+            return resposta;
         }
 
 
