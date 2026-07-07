@@ -2,12 +2,14 @@
     
     public class ABB<E extends Comparable<E>> {
     
-        private No<E> raiz; // referência à raiz da árvore.
-    
+        private No<E> raiz;// referência à raiz da árvore.
+
+
         /**
          * Construtor da classe.
          * Esse construtor cria uma nova árvore binária de busca vazia. Para isso, esse método atribui null à raiz da árvore.
          */
+
         public ABB() {
             raiz = null;
         }
@@ -245,7 +247,6 @@
             // Por fim, a raiz atual da árvore é atualizada, com a raiz retornada pelo método "remover" recursivo.
             this.raiz = remover(this.raiz, itemRemover);
         }
-    
         public int quantidadeDeNos(No<E> raizArvore) {
             if(vazia())
                 return 0;

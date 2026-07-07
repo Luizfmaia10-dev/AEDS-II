@@ -1,4 +1,4 @@
-/*
+
 import java.util.NoSuchElementException;
 
 public class Pilha<E> {
@@ -36,14 +36,25 @@ public class Pilha<E> {
     public int somaItem() {
         int somaItem = 0;
         Celula<E> atual = topo;
+        //.getItem
+        //.getProximo
         if (vazia()) {
             return somaItem;
         }
         while (atual != fundo) {
-            somaItem += (Integer) atual.getItem();
+            somaItem +=  atual.getItem();
             atual = atual.getProximo();
         }
         return somaItem;
+    }
+    public int numPratos(){
+        Celula<E> atual = topo;
+        int numPratos = 0;
+        while (atual != fundo) {
+            numPratos++;
+            atual = atual.getProximo();
+        }
+        return numPratos;
     }
 
     public Pilha<E> concatenar(Pilha<E> pilha) {
@@ -546,5 +557,3 @@ public class Pilha<E> {
         }
     }
 }
-*/
-//deixei comentado para quando rodar o Main n dar erro
